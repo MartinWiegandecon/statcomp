@@ -1,0 +1,372 @@
+nuts_code,countryname,nuts2_name
+AL01,Albania,Veri
+AL02,Albania,Qender
+AL03,Albania,Jug
+ALXX,Albania,Extra-Regio NUTS 2
+AT11,Austria,Burgenland
+AT12,Austria,Niederösterreich
+AT13,Austria,Wien
+AT21,Austria,Kärnten
+AT22,Austria,Steiermark
+AT31,Austria,Oberösterreich
+AT32,Austria,Salzburg
+AT33,Austria,Tirol
+AT34,Austria,Vorarlberg
+ATXX,Austria,Extra-Regio NUTS 2
+BE10,Belgium,Région de Bruxelles-Capitale/ Brussels Hoofdstedelijk Gewest
+BE21,Belgium,Prov. Antwerpen
+BE22,Belgium,Prov. Limburg (BE)
+BE23,Belgium,Prov. Oost-Vlaanderen
+BE24,Belgium,Prov. Vlaams-Brabant
+BE25,Belgium,Prov. West-Vlaanderen
+BE31,Belgium,Prov. Brabant Wallon
+BE32,Belgium,Prov. Hainaut
+BE33,Belgium,Prov. Liège
+BE34,Belgium,Prov. Luxembourg (BE)
+BE35,Belgium,Prov. Namur
+BEXX,Belgium,Extra-Regio NUTS 2
+BG31,Bulgaria,Северозападен
+BG32,Bulgaria,Северен централен
+BG33,Bulgaria,Североизточен
+BG34,Bulgaria,Югоизточен
+BG41,Bulgaria,Югозападен
+BG42,Bulgaria,Южен централен
+BGXX,Bulgaria,Extra-Regio NUTS 2
+HR02,Croatia,Panonska Hrvatska
+HR03,Croatia,Jadranska Hrvatska
+HR05,Croatia,Grad Zagreb
+HR06,Croatia,Sjeverna Hrvatska
+HRXX,Croatia,Extra-Regio NUTS 2
+CY00,Cyprus,Κύπρος
+CYXX,Cyprus,Extra-Regio NUTS 2
+CZ01,Czechia,Praha
+CZ02,Czechia,Střední Čechy
+CZ03,Czechia,Jihozápad
+CZ04,Czechia,Severozápad
+CZ05,Czechia,Severovýchod
+CZ06,Czechia,Jihovýchod
+CZ07,Czechia,Střední Morava
+CZ08,Czechia,Moravskoslezsko
+CZXX,Czechia,Extra-Regio NUTS 2
+DK01,Denmark,Hovedstaden
+DK02,Denmark,Sjælland
+DK03,Denmark,Syddanmark
+DK04,Denmark,Midtjylland
+DK05,Denmark,Nordjylland
+DKXX,Denmark,Extra-Regio NUTS 2
+EE00,Estonia,Eesti
+EEXX,Estonia,Extra-Regio NUTS 2
+FI19,Finland,Länsi-Suomi
+FI1B,Finland,Helsinki-Uusimaa
+FI1C,Finland,Etelä-Suomi
+FI1D,Finland,Pohjois- ja Itä-Suomi
+FI20,Finland,Åland
+FIXX,Finland,Extra-Regio NUTS 2
+FR10,France,Ile-de-France
+FRB0,France,Centre — Val de Loire
+FRC1,France,Bourgogne
+FRC2,France,Franche-Comté
+FRD1,France,Basse-Normandie
+FRD2,France,Haute-Normandie
+FRE1,France,Nord-Pas de Calais
+FRE2,France,Picardie
+FRF1,France,Alsace
+FRF2,France,Champagne-Ardenne
+FRF3,France,Lorraine
+FRG0,France,Pays de la Loire
+FRH0,France,Bretagne
+FRI1,France,Aquitaine
+FRI2,France,Limousin
+FRI3,France,Poitou-Charentes
+FRJ1,France,Languedoc-Roussillon
+FRJ2,France,Midi-Pyrénées
+FRK1,France,Auvergne
+FRK2,France,Rhône-Alpes
+FRL0,France,Provence-Alpes-Côte d’Azur
+FRM0,France,Corse
+FRY1,France,Guadeloupe
+FRY2,France,Martinique
+FRY3,France,Guyane
+FRY4,France,La Réunion
+FRY5,France,Mayotte
+FRXX,France,Extra-Regio NUTS 2
+DE11,Germany,Stuttgart
+DE12,Germany,Karlsruhe
+DE13,Germany,Freiburg
+DE14,Germany,Tübingen
+DE21,Germany,Oberbayern
+DE22,Germany,Niederbayern
+DE23,Germany,Oberpfalz
+DE24,Germany,Oberfranken
+DE25,Germany,Mittelfranken
+DE26,Germany,Unterfranken
+DE27,Germany,Schwaben
+DE30,Germany,Berlin
+DE40,Germany,Brandenburg
+DE50,Germany,Bremen
+DE60,Germany,Hamburg
+DE71,Germany,Darmstadt
+DE72,Germany,Gießen
+DE73,Germany,Kassel
+DE80,Germany,Mecklenburg-Vorpommern
+DE91,Germany,Braunschweig
+DE92,Germany,Hannover
+DE93,Germany,Lüneburg
+DE94,Germany,Weser-Ems
+DEA1,Germany,Düsseldorf
+DEA2,Germany,Köln
+DEA3,Germany,Münster
+DEA4,Germany,Detmold
+DEA5,Germany,Arnsberg
+DEB1,Germany,Koblenz
+DEB2,Germany,Trier
+DEB3,Germany,Rheinhessen-Pfalz
+DEC0,Germany,Saarland
+DED2,Germany,Dresden
+DED4,Germany,Chemnitz
+DED5,Germany,Leipzig
+DEE0,Germany,Sachsen-Anhalt
+DEF0,Germany,Schleswig-Holstein
+DEG0,Germany,Thüringen
+DEXX,Germany,Extra-Regio NUTS 2
+EL30,Greece,Aττική
+EL41,Greece,Βόρειο Αιγαίο
+EL42,Greece,Νότιο Αιγαίο
+EL43,Greece,Κρήτη
+EL51,Greece,"Aνατολική Μακεδονία, Θράκη"
+EL52,Greece,Κεντρική Μακεδονία
+EL53,Greece,Δυτική Μακεδονία
+EL54,Greece,Ήπειρος
+EL61,Greece,Θεσσαλία
+EL62,Greece,Ιόνια Νησιά
+EL63,Greece,Δυτική Ελλάδα
+EL64,Greece,Στερεά Ελλάδα
+EL65,Greece,Πελοπόννησος
+ELXX,Greece,Extra-Regio NUTS 2
+HU11,Hungary,Budapest
+HU12,Hungary,Pest
+HU21,Hungary,Közép-Dunántúl
+HU22,Hungary,Nyugat-Dunántúl
+HU23,Hungary,Dél-Dunántúl
+HU31,Hungary,Észak-Magyarország
+HU32,Hungary,Észak-Alföld
+HU33,Hungary,Dél-Alföld
+HUXX,Hungary,Extra-Regio NUTS 2
+IS00,Iceland,Ísland
+ISXX,Iceland,Extra-Regio NUTS 2
+IE04,Ireland,Northern and Western
+IE05,Ireland,Southern
+IE06,Ireland,Eastern and Midland
+IEXX,Ireland,Extra-Regio NUTS 2
+ITC1,Italy,Piemonte
+ITC2,Italy,Valle d’Aosta/Vallée d’Aoste
+ITC3,Italy,Liguria
+ITC4,Italy,Lombardia
+ITF1,Italy,Abruzzo
+ITF2,Italy,Molise
+ITF3,Italy,Campania
+ITF4,Italy,Puglia
+ITF5,Italy,Basilicata
+ITF6,Italy,Calabria
+ITG1,Italy,Sicilia
+ITG2,Italy,Sardegna
+ITH1,Italy,Provincia Autonoma di Bolzano/Bozen
+ITH2,Italy,Provincia Autonoma di Trento
+ITH3,Italy,Veneto
+ITH4,Italy,Friuli-Venezia Giulia
+ITH5,Italy,Emilia-Romagna
+ITI1,Italy,Toscana
+ITI2,Italy,Umbria
+ITI3,Italy,Marche
+ITI4,Italy,Lazio
+ITXX,Italy,Extra-Regio NUTS 2
+LV00,Latvia,Latvija
+LVXX,Latvia,Extra-Regio NUTS 2
+LI00,Liechtenstein,Liechtenstein
+LIXX,Liechtenstein,Extra-Regio NUTS 2
+LT01,Lithuania,Sostinės regionas
+LT02,Lithuania,Vidurio ir vakarų Lietuvos regionas
+LTXX,Lithuania,Extra-Regio NUTS 2
+LU00,Luxembourg,Luxembourg
+LUXX,Luxembourg,Extra-Regio NUTS 2
+MT00,Malta,Malta
+MTXX,Malta,Extra-Regio NUTS 2
+ME00,Montenegro,Црна Гора
+MEXX,Montenegro,Extra-Regio NUTS 2
+NL11,Netherlands,Groningen
+NL12,Netherlands,Friesland (NL)
+NL13,Netherlands,Drenthe
+NL21,Netherlands,Overijssel
+NL22,Netherlands,Gelderland
+NL23,Netherlands,Flevoland
+NL31,Netherlands,Utrecht
+NL32,Netherlands,Noord-Holland
+NL33,Netherlands,Zuid-Holland
+NL34,Netherlands,Zeeland
+NL41,Netherlands,Noord-Brabant
+NL42,Netherlands,Limburg (NL)
+NLXX,Netherlands,Extra-Regio NUTS 2
+MK00,North Macedonia,Северна Македонија
+MKXX,North Macedonia,Extra-Regio NUTS 2
+NO02,Norway,Innlandet
+NO06,Norway,Trøndelag
+NO07,Norway,Nord-Norge
+NO08,Norway,Oslo og Viken
+NO09,Norway,Agder og Sør-Østlandet
+NO0A,Norway,Vestlandet
+NO0B,Norway,Svalbard og Jan Mayen
+NOXX,Norway,Extra-Regio NUTS 2
+PL21,Poland,Małopolskie
+PL22,Poland,Śląskie
+PL41,Poland,Wielkopolskie
+PL42,Poland,Zachodniopomorskie
+PL43,Poland,Lubuskie
+PL51,Poland,Dolnośląskie
+PL52,Poland,Opolskie
+PL61,Poland,Kujawsko-pomorskie
+PL62,Poland,Warmińsko-mazurskie
+PL63,Poland,Pomorskie
+PL71,Poland,Łódzkie
+PL72,Poland,Świętokrzyskie
+PL81,Poland,Lubelskie
+PL82,Poland,Podkarpackie
+PL84,Poland,Podlaskie
+PL91,Poland,Warszawski stołeczny
+PL92,Poland,Mazowiecki regionalny
+PLXX,Poland,Extra-Regio NUTS 2
+PT11,Portugal,Norte
+PT15,Portugal,Algarve
+PT16,Portugal,Centro (PT)
+PT17,Portugal,Área Metropolitana de Lisboa
+PT18,Portugal,Alentejo
+PT20,Portugal,Região Autónoma dos Açores
+PT30,Portugal,Região Autónoma da Madeira
+PTXX,Portugal,Extra-Regio NUTS 2
+RO11,Romania,Nord-Vest
+RO12,Romania,Centru
+RO21,Romania,Nord-Est
+RO22,Romania,Sud-Est
+RO31,Romania,Sud-Muntenia
+RO32,Romania,Bucureşti-Ilfov
+RO41,Romania,Sud-Vest Oltenia
+RO42,Romania,Vest
+ROXX,Romania,Extra-Regio NUTS 2
+RS11,Serbia,Београдски регион
+RS12,Serbia,Регион Војводине
+RS21,Serbia,Регион Шумадије и Западне Србије
+RS22,Serbia,Регион Јужне и Источне Србије
+RSXX,Serbia,Extra-Regio NUTS 2
+SK01,Slovakia,Bratislavský kraj
+SK02,Slovakia,Západné Slovensko
+SK03,Slovakia,Stredné Slovensko
+SK04,Slovakia,Východné Slovensko
+SKXX,Slovakia,Extra-Regio NUTS 2
+SI03,Slovenia,Vzhodna Slovenija
+SI04,Slovenia,Zahodna Slovenija
+SIXX,Slovenia,Extra-Regio NUTS 2
+ES11,Spain,Galicia
+ES12,Spain,Principado de Asturias
+ES13,Spain,Cantabria
+ES21,Spain,País Vasco
+ES22,Spain,Comunidad Foral de Navarra
+ES23,Spain,La Rioja
+ES24,Spain,Aragón
+ES30,Spain,Comunidad de Madrid
+ES41,Spain,Castilla y León
+ES42,Spain,Castilla-La Mancha
+ES43,Spain,Extremadura
+ES51,Spain,Cataluña
+ES52,Spain,Comunitat Valenciana
+ES53,Spain,Illes Balears
+ES61,Spain,Andalucía
+ES62,Spain,Región de Murcia
+ES63,Spain,Ciudad de Ceuta
+ES64,Spain,Ciudad de Melilla
+ES70,Spain,Canarias
+ESXX,Spain,Extra-Regio NUTS 2
+SE11,Sweden,Stockholm
+SE12,Sweden,Östra Mellansverige
+SE21,Sweden,Småland med öarna
+SE22,Sweden,Sydsverige
+SE23,Sweden,Västsverige
+SE31,Sweden,Norra Mellansverige
+SE32,Sweden,Mellersta Norrland
+SE33,Sweden,Övre Norrland
+SEXX,Sweden,Extra-Regio NUTS 2
+CH01,Switzerland,Région lémanique
+CH02,Switzerland,Espace Mittelland
+CH03,Switzerland,Nordwestschweiz
+CH04,Switzerland,Zürich
+CH05,Switzerland,Ostschweiz
+CH06,Switzerland,Zentralschweiz
+CH07,Switzerland,Ticino
+CHXX,Switzerland,Extra-Regio NUTS 2
+TR10,Turkey,İstanbul
+TR21,Turkey,"Tekirdağ, Edirne, Kırklareli"
+TR22,Turkey,"Balıkesir, Çanakkale"
+TR31,Turkey,İzmir
+TR32,Turkey,"Aydın, Denizli, Muğla"
+TR33,Turkey,"Manisa, Afyonkarahisar, Kütahya, Uşak"
+TR41,Turkey,"Bursa, Eskişehir, Bilecik"
+TR42,Turkey,"Kocaeli, Sakarya, Düzce, Bolu, Yalova"
+TR51,Turkey,Ankara
+TR52,Turkey,"Konya, Karaman"
+TR61,Turkey,"Antalya, Isparta, Burdur"
+TR62,Turkey,"Adana, Mersin"
+TR63,Turkey,"Hatay, Kahramanmaraş, Osmaniye"
+TR71,Turkey,"Kırıkkale, Aksaray, Niğde, Nevşehir, Kırşehir"
+TR72,Turkey,"Kayseri, Sivas, Yozgat"
+TR81,Turkey,"Zonguldak, Karabük, Bartın"
+TR82,Turkey,"Kastamonu, Çankırı, Sinop"
+TR83,Turkey,"Samsun, Tokat, Çorum, Amasya"
+TR90,Turkey,"Trabzon, Ordu, Giresun, Rize, Artvin, Gümüşhane"
+TRA1,Turkey,"Erzurum, Erzincan, Bayburt"
+TRA2,Turkey,"Ağrı, Kars, Iğdır, Ardahan"
+TRB1,Turkey,"Malatya, Elazığ, Bingöl, Tunceli"
+TRB2,Turkey,"Van, Muş, Bitlis, Hakkari"
+TRC1,Turkey,"Gaziantep, Adıyaman, Kilis"
+TRC2,Turkey,"Şanlıurfa, Diyarbakır"
+TRC3,Turkey,"Mardin, Batman, Şırnak, Siirt"
+TRXX,Turkey,Extra-Regio NUTS 2
+UKC1,United Kingdom,Tees Valley and Durham
+UKC2,United Kingdom,Northumberland and Tyne and Wear
+UKD1,United Kingdom,Cumbria
+UKD3,United Kingdom,Greater Manchester
+UKD4,United Kingdom,Lancashire
+UKD6,United Kingdom,Cheshire
+UKD7,United Kingdom,Merseyside
+UKE1,United Kingdom,East Yorkshire and Northern Lincolnshire
+UKE2,United Kingdom,North Yorkshire
+UKE3,United Kingdom,South Yorkshire
+UKE4,United Kingdom,West Yorkshire
+UKF1,United Kingdom,Derbyshire and Nottinghamshire
+UKF2,United Kingdom,"Leicestershire, Rutland and Northamptonshire"
+UKF3,United Kingdom,Lincolnshire
+UKG1,United Kingdom,"Herefordshire, Worcestershire and Warwickshire"
+UKG2,United Kingdom,Shropshire and Staffordshire
+UKG3,United Kingdom,West Midlands
+UKH1,United Kingdom,East Anglia
+UKH2,United Kingdom,Bedfordshire and Hertfordshire
+UKH3,United Kingdom,Essex
+UKI3,United Kingdom,Inner London — West
+UKI4,United Kingdom,Inner London — East
+UKI5,United Kingdom,Outer London — East and North East
+UKI6,United Kingdom,Outer London — South
+UKI7,United Kingdom,Outer London — West and North West
+UKJ1,United Kingdom,"Berkshire, Buckinghamshire and Oxfordshire"
+UKJ2,United Kingdom,"Surrey, East and West Sussex"
+UKJ3,United Kingdom,Hampshire and Isle of Wight
+UKJ4,United Kingdom,Kent
+UKK1,United Kingdom,"Gloucestershire, Wiltshire and Bristol/Bath area"
+UKK2,United Kingdom,Dorset and Somerset
+UKK3,United Kingdom,Cornwall and Isles of Scilly
+UKK4,United Kingdom,Devon
+UKL1,United Kingdom,West Wales and The Valleys
+UKL2,United Kingdom,East Wales
+UKM5,United Kingdom,North Eastern Scotland
+UKM6,United Kingdom,Highlands and Islands
+UKM7,United Kingdom,Eastern Scotland
+UKM8,United Kingdom,West Central Scotland
+UKM9,United Kingdom,Southern Scotland
+UKN0,United Kingdom,Northern Ireland
+UKXX,United Kingdom,Extra-Regio NUTS 2

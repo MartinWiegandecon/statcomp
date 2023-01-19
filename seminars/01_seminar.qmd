@@ -1,0 +1,102 @@
+---
+title: "Modern Statistical Computing"
+subtitle: "Seminar 1"
+author: "Martin Wiegand"
+institute: "Pompeu Fabra University"
+execute:
+  echo: true
+format:
+  revealjs:
+    theme: [default, custom.scss]
+    scrollable: true
+toc: true
+toc-depth: 1
+number-sections: false
+mouse-wheel: true
+code-overflow: scroll
+code-line-numbers: false
+code-copy: true
+cache: true
+title-slide-style: pandoc 
+bibliography: references_seminar.bib
+---
+
+  
+## Welcome! 
+  
+Brief organizational details of the seminars: 
+
+- Will probably meet in weeks 2 (today), 4, 6, 8, 9 and 10 
+- Idea of first seminars: you will apply the tools from class, I will assist you
+- Some of the seminars towards the end will be devoted to your final projects 
+
+Briefly about me: 
+
+- 3rd-year PhD student in Econ 
+- Contact: <martin.wiegand@upf.edu>
+- In case of any questions/suggestions (also w.r.t your final projects), feel free to reach out! 
+
+## Idea of Today's Seminar  
+
+You will: 
+
+1. pull some data from [Eurostat](https://ec.europa.eu/eurostat/data/database) on economic indicators and migrant settlement patterns across European regions
+
+2. do some data manipulation, plots, etc. 
+
+## Pull Eurostat Data 
+
+There are various ways how we could pull data from Eurostat: 
+
+**1.** Go to [Eurostat](https://ec.europa.eu/eurostat/data/database) website and manually select table/years/variables, etc.  
+$\rightarrow$ Cons: Need to manually re-download data in case of changes to selection criteria (e.g. years, variables)  
+
+**2.** For many publicly available databases, there are R packages available 
+that allow you to skip 1. and directly import data to R.  
+$\rightarrow$ Examples:  [Eurostat](https://ec.europa.eu/eurostat/data/database), [OECD](https://github.com/expersso/OECD), [World Bank](https://cran.r-project.org/web/packages/wbstats/vignettes/wbstats.html), $\dots$
+
+In practice, often a combination of **1.** and **2.** (e.g. find table names of interest via **1.**, then download via **2.**)
+
+--- 
+
+
+
+## Prerequisites 
+
+```{r, warning = FALSE}
+library(eurostat)
+# Alternatively, read-in data via readxl 
+library(readxl)
+
+# Data manipulation, etc 
+library(tidyverse)
+library(dplyr)
+library(lubridate) # helpful for date manipulation 
+```
+
+```{r}
+migrant_df <- get_eurostat("cens_11cobe_r2")
+
+migrant_df
+
+```
+
+## Homework 
+
+In the seminar sessions that are not devoted to your final projects, parts of the assignment will be considered as homework, and are **due on the next Thursday (one week later) at 3pm**. 
+
+**Preferred format** of handed in homework: rendered R-markdown or quarto notebook (as PDF or HTML).  
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
