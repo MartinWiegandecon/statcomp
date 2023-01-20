@@ -1,0 +1,120 @@
+---
+# title: "Modern Statistical Computing"
+# subtitle: "Seminar 1"
+# title-block-banner: true
+date: "January 20, 2023"
+format: 
+  pdf: 
+    documentclass: report
+    geometry: 
+      - top = 30mm
+      - left = 20mm
+    fontfamily: libertinus
+    colorlinks: true
+---
+
+```{=tex}
+\begin{center}\vspace{0.3cm}
+\textbf{\Large Modern Statistical Computing} \\
+\vspace{5pt} {\large Tipps for Seminar \#1} \\
+\vspace{5pt} {\large January 20, 2023} \\
+\end{center}
+```
+\flushleft
+
+\rule{\linewidth}{0.1mm}
+
+```{r, message = FALSE, warning = FALSE}
+
+# Packages I used 
+library(eurostat)
+library(readr)
+library(dplyr)
+library(tidyverse)
+library(lubridate)
+```
+
+
+```{r, include = FALSE}
+# DIRECTORIES 
+directory = getwd()
+datapath = file.path(directory, "01_seminar_files/data") 
+funpath = file.path(directory, "01_seminar_files/funs")
+outpath = file.path(directory, "01_seminar_files/out")
+source(file = file.path(funpath, "funs.R"))
+
+
+```
+
+
+
+\subsection{Downloading the Data} 
+
+To make sure that everyone pulls the correct data when working on the assignment (which most of you did), I wanted you to use the following tables from [Eurostat](https://ec.europa.eu/eurostat/data/database):
+
+-   population (tgs00096)
+-   population density (tgs00024)
+-   population changes (tgs00099)
+-   fertility rate (tgs00100)
+
+\subsection{Tidying the Data}
+
+Once you have downloaded the different tables, I would make sure that you "clean them", which e.g. includes removing variables that are not needed for the analysis, renaming variables such that later on it is clear what they mean.\footnote{As you have noticed, in the raw downloaded version, the key variable will always be called values.} 
+Moreover, before you merge the datasets, make sure that they are in the same format. As some of you have already realized yesterday, the population change dataset is not directly ready to be merged with the others. 
+Specifically, it is still in long format with id variables `indic_de`, `geo` and `time`. 
+
+
+```{r, warning=FALSE}
+popchanges_df <- get_eurostat("tgs00099")
+popchanges_df
+
+```
+
+When you go to the table at [Eurostat](https://ec.europa.eu/eurostat/data/database), it contains an explanation of what each rowname means. 
+
+To merge it to the other datasets (which are in `geo` and `time` long format), we first have to reshape the `popchanges_df` dataset (and then either overwrite the existing one, or create a new dataset), for instance as follows: 
+
+```{r}
+popchanges_df <- popchanges_df  %>% 
+  pivot_wider(id_cols = c(geo, time), names_from = indic_de, 
+              values_from = values)
+```
+
+\subsection{Selecting Years and Countries}
+
+Many of you struggled with selecting regions from two countries. 
+One way would be to merge in my help file that maps regions to countries directly, or alternatively recognize that the first two letters of the NUTS2-codes contain the country code (according to Eurostat). 
+
+The former would be something along the lines: 
+
+```{r, warning = FALSE}
+# Read in help file (using your own filepath) 
+nutscountrymapping <- read_csv(file = file.path(datapath, "nuts2_overview.csv"))
+
+# Merge with merged dataset (or alternatively, but less efficient with each individual table) 
+
+# For illustrative purposes, I will just merge with one table 
+# Important, in the nutscountrymapping dataset, the geographic variable is called nuts_code (and NOT GEO)
+popchanges_df %>% 
+  left_join(nutscountrymapping, by = c("geo" = "nuts_code")) %>% 
+  filter(countryname %in% c("Spain", "Germany"))
+
+```
+
+To select years, I would suggest using the package `lubridate` to make a year variable from the date format, and then simply filter for the year range 2011-2019. 
+
+**Good luck with the rest of the assignment!** 
+
+
+
+
+
+
+
+
+
+
+
+
+
+

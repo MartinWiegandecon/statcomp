@@ -96,18 +96,6 @@ popdensity %<>%
   select(geo, time, values) %>% 
   rename(popdensity = values)
 
-population %>% 
-  left_join(popdensity, by = c("geo", "time"))
-%>% 
-
-  |>
-
-rename(population, population = values)
-
-
-
-View(population)
-
 population 
 popdensity
 
