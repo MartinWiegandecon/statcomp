@@ -1,2 +1,8 @@
 # Special folders to be ignored
 *other_material/
+.Rproj.user
+
+# Special files not to be merged 
+*.pdf
+
+

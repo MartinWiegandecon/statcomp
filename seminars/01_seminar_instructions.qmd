@@ -72,7 +72,8 @@ Lastly, we would like to study whether migrants locate in different regions comp
 which you can find under `Population and social conditions` on 
 [Eurostat](https://ec.europa.eu/eurostat/data/database). Again our regional units will be at the NUTS2 level. As before, focus on Spain and another country of your interest. 
 
-1. Pull data on population by group of country of birth and educational attainment (tablename: `cens_11_cobe_r2`). Build a NUTS2-level dataset with information on the total stock of natives (`c_birth = NAT`) and migrants (`c_birth = FOR`) across education groups, and by education groups. In terms of education groups, aggregate the ISCED categories used from Eurostat to four broader categories (no education, primary, secondary and tertiary education). 
+1. Pull data on population by group of country of birth and educational attainment (tablename: `cens_11cobe_r2`).\footnote{If you want to manually download the data, you can find it under: "Database by themes" $>$ 
+"Population and social conditions" $>$ "Population and housing censuses (cens)" $>$ "Census 2011 round" $>$ "Population by migration characteristics"} Build a NUTS2-level dataset with information on the total stock of natives (`c_birth = NAT`) and migrants (`c_birth = FOR`) across education groups, and by education groups. In terms of education groups, aggregate the ISCED categories used from Eurostat to four broader categories (no education, primary, secondary and tertiary education). 
 
 2. Generate a migrant concentration variable for each region $r$ in country $c$ as follows 
 $$

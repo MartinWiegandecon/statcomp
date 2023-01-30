@@ -83,39 +83,6 @@ countrylist <- nutsnames_df %>%
 
 countryvec = countrylist$country_iso2
 
-population <- get_eurostat("tgs00096", filters = list(
-  sinceTimePeriod = 2011
-))
-
-
-population <- select(population, geo, time, values) %>% 
-  rename(population = values)
-
-
-popdensity %<>%
-  select(geo, time, values) %>% 
-  rename(popdensity = values)
-
-population 
-popdensity
-
-population %>% 
-  mutate(country = str_sub(geo, 1, 2)) %>% 
-  filter(country == "ES" | country == "UK") %>% 
-  View()
-
-population %>% 
-  mutate(year = year(time)) %>% 
-  left_join(popdensity_df, by = c("geo", "year"))
-
-popdensity_df
-
-
-
-population %>% 
-  mutate(year = year(time))
-
-
 # Merge in full countryname 
 countryname <- countrycode(countryvec, origin = 'eurostat', destination = 'country.name')
 
@@ -178,19 +145,7 @@ fertility_df <- pull_eurostat_data(tablename = "tgs00100",
 # Merge name information from excel 
 nutsnames_df <- read_csv(file = file.path(datapath, 'nuts2_overview.csv')) %>% 
   arrange(countryname)
-
-
-
-
-
-
-
-
-population_df %>% 
-  left_join(popdensity_df, by = c("geo", "country", "year"))
-
-popdensity_df
-
+e
 # Merge 
 nuts2_df <- population_df %>% 
   left_join(popdensity_df) %>% 
@@ -231,7 +186,8 @@ population = sum(population, na.rm = TRUE)) %>%
 # Exercise 2  -------------------------------------------------------------
 
 nuts2_geresp_df <- nuts2_df %>% 
-  filter(country %in% countrylist)
+  filter(country %in% countrylist) %>% 
+  select(geo, nuts2_name, country, year, everything())
 
 country_geresp_df <- country_df %>% 
   filter(country %in% countrylist) %>% 
@@ -328,27 +284,27 @@ nuts2_geresp_df %>%
     panel.grid.major = element_line(colour = "grey70", size = 0.2),
     panel.grid.minor = element_blank()
   ) + 
-  ggtitle("Deviation from National Population Growth")
+  ggtitle("Deviation from National Population Growth (in PP)")
+
+# Regions that grew more/less than their nations 
+
+# GER 
+nuts2_geresp_df %>%
+  filter(devnatgrowth > 1 & country == 'DE') %>%  
+  select(nuts2_name, year, popgrowth) %>% 
+  arrange(-popgrowth)
+
+# SPAIN 
+nuts2_geresp_df %>%
+  filter(devnatgrowth > 1 & country == 'ES') %>%  
+  select(nuts2_name, year, popgrowth) %>% 
+  arrange(-popgrowth)
+  
+
+
 
 
 # Which factors contribute more to local growth 
-nuts2_geresp_df %>% 
-  group_by(geo, year) %>%  
-  ggplot(mapping = aes(x = year, y = popgrowth, group = year)) + 
-  geom_boxplot()
-
-
-nuts2_geresp_df %>% 
-  ggplot() + 
-  geom_boxplot(aes(x = factor(year), y = popgrowth))
-
-barformat %>% 
-  filter(country == "DE", 
-         name != "popgrowth") %>% 
-  ggplot(aes(x = year, y = , fill = name)) + 
-  geom_boxplot() + 
-  scale_x_continuous(breaks = c(2011, 2013, 2015, 2017, 2019))
-
 
 barformat <- nuts2_geresp_df %>% 
   rename(netmigrgrowth = netmigr) %>%  
@@ -359,31 +315,76 @@ barformat %<>%
   rename(growth = value)
 
 
-barformat %>%
-  filter(abovenatgrowth == 1 &  country == 'DE') %>% 
-  ggplot(mapping = aes(x = factor(year), y = growth, fill = name)) + 
-  geom_bar(color = "black", position = position_dodge(0.9), stat = 'summary', fun = 'mean') + 
-  scale_fill_manual(values = c(col1, col2, col3)) + 
-  labs(x = "Year", y = "Growth Rate") + 
-  theme(
-    text = element_text(family = "Palatino Linotype"), 
-    plot.title = element_text(face = "bold", size = 12),
-    legend.background = element_rect(fill = "white", size = 4, 
-                                     colour = "white"),
-    legend.justification = c(-0.5, 1.5),
-    legend.position = c(0, 1),
-    axis.ticks = element_line(colour = "grey70", size = 0.2),
-    panel.grid.major = element_line(colour = "grey70", size = 0.2),
-    panel.grid.minor = element_blank()
-  ) + 
-  theme_bw() + 
-  ggtitle()
+for(country in c('DE', 'ES')){
+  
+  # Baseline Graph 
+  barformat %>%
+    filter(abovenatgrowth == 1 & !!country == paste(country)) %>% 
+    ggplot(mapping = aes(x = factor(year), y = growth, fill = name)) + 
+    geom_bar(color = "black", position = position_dodge(0.9), stat = 'summary', fun = 'mean') + 
+    scale_fill_manual(values = c(col1, col2, col3), 
+                      labels = c("Natural", "Net Migration", "Total")) +
+    labs(x = "Year", y = "Growth Rate", 
+         fill = "Growth Type") + 
+    theme(
+      text = element_text(family = "Palatino Linotype"), 
+      plot.title = element_text(face = "bold", size = 12),
+      legend.background = element_rect(fill = "white", size = 4, 
+                                       colour = "white"),
+      legend.justification = c(-0.5, 1.5),
+      legend.position = c(0, 1),
+      axis.ticks = element_line(colour = "grey70", size = 0.2),
+      panel.grid.major = element_line(colour = "grey70", size = 0.2),
+      panel.grid.minor = element_blank()
+    ) + 
+    theme_bw() + 
+    ggtitle(paste("Contribution to Growth in Country", country, sep = " ")) 
+  
+  # Loop below and across national growth 
+  for(above in c(0, 1)){
+    
+    if(above == 0){
+      titlelabel = "Below National Growth"
+    }
+    else {
+      titlelabel = "Above National Growth"
+    }
+    
+    (barformat %>%
+    filter(abovenatgrowth == 1 & !!country == paste(country)) %>% 
+    ggplot(mapping = aes(x = factor(year), y = growth, fill = name)) + 
+    geom_bar(color = "black", position = position_dodge(0.9), stat = 'summary', fun = 'mean') + 
+    scale_fill_manual(values = c(col1, col2, col3), 
+                      labels = c("Natural", "Net Migration", "Total")) +
+    labs(x = "Year", y = "Growth Rate", 
+         fill = "Growth Type") + 
+    theme(
+      text = element_text(family = "Palatino Linotype"), 
+      plot.title = element_text(face = "bold", size = 12),
+      legend.background = element_rect(fill = "white", size = 4, 
+                                       colour = "white"),
+      legend.justification = c(-0.5, 1.5),
+      legend.position = c(0, 1),
+      axis.ticks = element_line(colour = "grey70", size = 0.2),
+      panel.grid.major = element_line(colour = "grey70", size = 0.2),
+      panel.grid.minor = element_blank()
+    ) + 
+    theme_bw() + 
+    ggtitle(paste("Contribution to Growth in Country", country, "(", titlelabel, ")", 
+                  sep = " "))) %>% 
+      print()
+    
+  }
+}
+
+
 
 
 ### Exercise 3 ### 
 
 # Exercise 3 --------------------------------------------------------------
 
+# National migrant stocks 
 migrantnat_df <- get_eurostat("cens_11cob_n") %>%
   filter(geo %in% c('DE', 'ES'), 
          c_birth %in% c('FOR', 'NAT'), 
@@ -393,41 +394,113 @@ migrantnat_df <- get_eurostat("cens_11cob_n") %>%
   rename(nationalmigrants = FOR, 
           nationalnatives = NAT)
 
-
-migrantnuts2_df <- get_eurostat("cens_11cobe_r2")  
+# NUTS 2 (need to select NUTS2 later)
+migrant_df <- get_eurostat("cens_11cobe_r2") %>%   
   filter(c_birth %in% c('FOR', 'NAT'), 
-         y_arriv == 'TOTAL' & sex == 'T') %>% 
-  pivot_wider(id_cols = c(geo, time), names_from = c_birth, 
+         age == 'TOTAL' & sex == 'T') %>% 
+  pivot_wider(id_cols = c(geo, time, isced97), names_from = c_birth, 
               values_from = values)
 
-migrantnuts2_df %<>%
-  mutate(country = str_sub(geo, 1, 2), 
-         nuts2_digit = str_sub(geo, 4, 4)) %>% 
-  filter(nuts2_digit != "", 
-         country %in% c('DE', 'ES')) %>% 
-  left_join(migrantnat_df, by = c("country" = "geo", "time")) %>%  
-  mutate(year = year(time)) %>% 
-  select(geo, year, FOR, NAT, nationalmigrants, nationalnatives, country)
+# Generate joined education variable 
+migrant_df %<>% 
+  mutate(edu_broad = ifelse(isced97 == "NED", 0, 
+ifelse(isced97 %in% c('ED1'), 1, 
+ifelse(isced97 %in% c('ED2', 'ED3', 'ED4'), 2, 
+ifelse(isced97 %in% c('ED5', 'ED6'), 3, 
+ifelse(isced97 == "TOTAL", 99, 
+NA)
+)
+)
+)
+)
+,
+  country = str_sub(geo, 1, 2)) %>% 
+  filter(edu_broad %in% c(0, 1, 2, 3, 99), 
+         country %in% countrylist)
 
-# Merge in popdensity 
-migrantnuts2_df <- migrantnuts2_df %>%   
-  left_join(select(nuts2_geresp_df, geo, year, popdensity))
+# Select NUTS2 Regions, and national values 
+migrantnuts2_df <- migrant_df %>% 
+  mutate(nuts2_helper = str_sub(geo, 4, 4)) %>% 
+  filter(nuts2_helper != "") %>% 
+  rename(nuts2_code = geo) %>% 
+  select(nuts2_code, country, edu_broad, FOR, NAT) %>% 
+  group_by(nuts2_code, country, edu_broad) %>% 
+  summarise_at(vars(FOR, NAT), ~sum(.)) %>% 
+  ungroup()
 
-migrantnuts2_df <- migrantnuts2_df %>% 
-  mutate(migrantconcentr = FOR/nationalmigrants/(NAT/nationalnatives), 
-         log_popdensity = log(popdensity)
+# National values for stock 
+migrantnat_df <- migrant_df %>% 
+  filter(geo %in% countrylist) %>% 
+  rename(nationalmigrants = FOR, 
+         nationalnatives = NAT) %>% 
+  select(country, edu_broad, nationalmigrants, nationalnatives)  %>% 
+  group_by(country, edu_broad) %>% 
+  summarise_at(vars(nationalmigrants, nationalnatives), ~sum(.)) %>% 
+  ungroup()
+
+# Merge to compute concentration variables 
+migrantnuts2_df %<>% 
+  left_join(migrantnat_df) %>% 
+  mutate(concentration = (FOR/nationalmigrants)/(NAT/nationalnatives))
+  
+# Merge in population density 
+finalnuts2_df <- migrantnuts2_df %>%  
+  left_join(filter(select(nuts2_geresp_df, geo, year, popdensity), year == 2011), 
+            by = c("nuts2_code" = "geo"))
 
 
-migrantnuts2_df %>%  
-  ggplot(mapping = aes(x = log(popdensity), y = migrantconcentr, color = country)) + 
-  geom_point()
-ggplot(mapping = aes(x = popdensity_df, y = 
-                         migrantconcentr))+ 
-  geom_point()
+  
+# Generate plots 
 
+# Loop across education categories 
 
+for(edu in c(99, 0, 1, 2, 3)){
+  
+  if(edu == 0){
+    titlelab = "No Education"
+  }
+  else if(edu == 1){
+    titlelab = "Primary Education"
+  }
+  else if(edu == 2){
+    titlelab = "Secondary Education"
+  }
+  else if(edu == 3){
+    titlelab = "Tertiary Education"
+  }
+  else {
+    titlelab = ""
+  }
+  
+  (finalnuts2_df %>% 
+    filter(edu_broad == edu) %>% 
+    ggplot(mapping = aes(x = log(popdensity), y = concentration, 
+                         color = country)) + 
+    geom_point() + 
+    geom_smooth(method = 'lm') + 
+    scale_color_manual(values = c(col1, col2), 
+                    labels = c("Germany", "Spain")) +
+    labs(x = "Log Population Density", y = "Migrant Concentration", 
+         color = "Country") + 
+    theme(
+      text = element_text(family = "Palatino Linotype"), 
+      plot.title = element_text(face = "bold", size = 12),
+      legend.background = element_rect(fill = "white", size = 4, 
+                                       colour = "white"),
+      legend.justification = c(-0.5, 1.5),
+      legend.position = c(0, 1),
+      axis.ticks = element_line(colour = "grey70", size = 0.2),
+      panel.grid.major = element_line(colour = "grey70", size = 0.2),
+      panel.grid.minor = element_blank()
+    ) + 
+    theme_bw() + 
+     ggtitle(paste("Migrant Concentration", titlelab, sep = "\n"))) %>% 
+  print()
+  
+  
+}
 
-
+#### end 
 
 
 
