@@ -8,12 +8,31 @@
 
 # LIST OF FUNCTIONS
 # - coefSummary: summarize the estimated coefficients of a lm/glm object
+
+# PERMUTATION TESTS
 # - lmResPerm.onevar: residual permutation test for a single variable in linear regression
 # - lmResPerm: residual permutation test for all variables in linear regression
+
+# AUXILIARY FUNCTIONS FOR LOGISTIC REGRESSION
 # - flogregvec, flogreg: (negative) logistic regression log-likelihood
 # - fplogreg: gradient and hessian of flogreg
+
+# AUXILIARY FUNCTIONS FOR POISSON REGRESSION
 # - fpoisregvec, fpoisreg: (negative) Poisson regression log-likelihood
 # - fppoisreg: gradient and hessian of Poisson
+
+# BOOTSTRAP FOR GLMs
+# - bootGLM: Bootstrap confidence intervals for a GLM
+# - mleGLM: obtain MLE under a GLM
+# - bootCI: Extract confidence intervals from object returned by "boot"
+
+# LOSS FUNCTIONS FOR CROSS-VALIDATION
+# - cost_loglik_logistic: logistic regression log-likelihood loss
+# - cost_misclass: proportion of miss-classified observations given predicted class probabilities
+
+
+
+
 
 
 
@@ -39,6 +58,10 @@ coefSummary= function(lmfit, level=0.95, digits=3) {
 
 
 
+###########################################################################################
+# PERMUTATION TESTS
+###########################################################################################
+
 #Residual permutation test for a single variable in linear regression
 #Input
 # - y: outcome
@@ -53,7 +76,7 @@ lmResPerm.onevar= function(y, x1, x2, B=5000) {
   e= residuals(fit)
   bperm= double(B)
   for (b in 1:B) {
-    eperm= e[sample(1:length(e), size=length(e), replace=FALSE)]
+    eperm= sample(e, size=length(e), replace=FALSE)
     x1tilde= x1hat + eperm
     fitperm= lm(y ~ x1tilde + x2)
     bperm[b]= coef(fitperm)['x1tilde']    
@@ -97,7 +120,7 @@ expit= function(z) 1/(1+exp(-z)) #inverse of logit function
 
 #Negative logistic regression log-likelihood, for multiple beta values
 flogregvec= function(beta, y, ytX, n, X=X, logscale=TRUE) {
-  if (missing(ytX)) ytX = t(X %*% y)
+  if (missing(ytX)) ytX = matrix(y,nrow=1) %*% X
   if (is.vector(beta)) beta= matrix(beta,ncol=1)
   apply(beta, 1, function(z) flogreg(z, ytX=ytX, n=n, X=X, logscale=logscale))
 }
@@ -121,7 +144,7 @@ flogreg= function(beta, y, X, ytX, logscale=TRUE) {
 # If beta==0, only ytX, colSumX, XtX are used
 # If beta!=0, only Xbeta and X are used
 fplogreg= function(beta, y, ytX, Xbeta, X, colsumX, XtX) {
-  if (missing(ytX)) ytX = t(X %*% y)
+  if (missing(ytX)) ytX = matrix(y,nrow=1) %*% X
   if (any(beta != 0)) {
     if (missing(Xbeta)) Xbeta= as.vector(X %*% beta)
     prob= 1.0/(1.0+exp(-Xbeta))
@@ -225,3 +248,31 @@ bootCI= function(fit, bootfit, level=0.95) {
   return(bhat.boot)
 }
 
+
+
+###########################################################################################
+## LOSS FUNCTIONS FOR CROSS-VALIDATION
+###########################################################################################
+
+# cost_loglik_logistic: logistic regression log-likelihood loss
+# Input
+# - yobs: observed class (must be binary)
+# - ypred: predicted probability for yobs=1
+# Output: logistic regression logistic regression log-likelihood
+cost_loglik_logistic= function(yobs, ypred) {
+  loglik= dbinom(yobs, size=1, prob=ypred, log=TRUE)
+  return(sum(-loglik))
+}
+
+# cost_misclass: proportion of miss-classified observations given predicted class probabilities
+# Input
+# - yobs: observed class (must be binary)
+# - ypred: predicted probability for yobs=1
+# - threshold: if ypred > threshold then yobs=1 is predicted, else yobs=0 is predicted
+# Output: proportion of miss-classified observations in yobs
+cost_misclass= function(yobs, ypred, threshold=0.5) {
+  err1= (ypred > threshold) & (yobs==0)
+  err2= (ypred < threshold) & (yobs==1)
+  ans= sum(err1 | err2) / length(yobs)
+  return(ans)
+}

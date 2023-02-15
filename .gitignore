@@ -5,4 +5,11 @@
 # Special files not to be merged 
 *.pdf
 
+# Specific individual files (e.g. municipality coordinates)
+municoordinates.*
+muniscoord.dta
+
+
+
+
 

@@ -400,32 +400,34 @@
 <li><a href="#/linear-models" id="/toc-linear-models">Linear models</a></li>
 <li><a href="#/extracting-inference" id="/toc-extracting-inference">Extracting inference</a></li>
 <li><a href="#/residual-analysis" id="/toc-residual-analysis">Residual analysis</a></li>
+<li><a href="#/exercise" id="/toc-exercise">Exercise</a></li>
 <li><a href="#/interpreting-the-coefficients" id="/toc-interpreting-the-coefficients">Interpreting the coefficients</a></li>
+<li><a href="#/linear-contrasts" id="/toc-linear-contrasts">Linear contrasts</a></li>
 <li><a href="#/interactions" id="/toc-interactions">Interactions</a></li>
 <li><a href="#/nested-models" id="/toc-nested-models">Nested models</a></li>
+<li><a href="#/summary-of-useful-functions" id="/toc-summary-of-useful-functions">Summary of useful functions</a></li>
+<li><a href="#/exercise-1" id="/toc-exercise-1">Exercise</a></li>
 </ul>
 </nav>
 </section>
 <section id="reproducing-these-lecture-notes" class="slide level2">
 <h2>Reproducing these lecture notes</h2>
-<p>Required R packages</p>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-1_621775b97d47229f848a7570a709c357">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"coefplot"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggpubr"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"gapminder"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"modelr"</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"multcomp"</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Load the required R packages</p>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-1_4c58323c4efa1f3e4f743328870c828e">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(coefplot)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(hexbin)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelr)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multcomp)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Once they’re installed, load them.</p>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-2_572a9bc261f085599c775369b6ebb8ef">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(coefplot)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelr)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multcomp)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We also load auxiliary routines stored at <code>routines.R</code> (directory <code>code</code>)</p>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-2_aeace58c67f4fc28f1162d2cc4bcba87">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">'../code/routines.R'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>You can also source files from RStudio (<code>Code -&gt; Source File</code>)</p>
 </section>
 <section id="models" class="slide level2">
 <h2>Models</h2>
@@ -473,16 +475,14 @@ X=\begin{pmatrix}
 <section id="reminder-1" class="slide level2">
 <h2>Reminder</h2>
 <p>Sometimes we’re interested in linear combinations of parameters</p>
-<p><strong>Result.</strong> Let <span class="math inline">\(Z \sim N(m, V)\)</span> be a <span class="math inline">\(p\)</span>-dimensional Normal distribution, and <span class="math inline">\(C\)</span> a full-rank <span class="math inline">\(q \times p\)</span> matrix (<span class="math inline">\(q \leq p\)</span>). Then <span class="math display">\[
+<p><strong>Result.</strong> Let <span class="math inline">\(Z \sim N(\mu, V)\)</span> be a <span class="math inline">\(p\)</span>-dimensional Normal distribution, and <span class="math inline">\(C\)</span> a <span class="math inline">\(q \times p\)</span> matrix with full rank <span class="math inline">\(q \leq p\)</span>. Then <span class="math display">\[
 W= C Z \sim N(C \mu, C V C^T)
 \]</span> is a <span class="math inline">\(q\)</span>-dimensional normal</p>
 <p><strong>Example.</strong> We seek a 95% CI for <span class="math inline">\(\beta_2 - \beta_1\)</span>. Let <span class="math inline">\(C= \begin{pmatrix} -1 &amp; 1 &amp; 0 &amp; \ldots &amp; 0 \\ \end{pmatrix}\)</span> Then <span class="math display">\[C \begin{pmatrix} \hat{\beta}_1 \\ \hat{\beta}_2 \\ \ldots \\ \hat{\beta}_p \end{pmatrix} = \hat{\beta}_2 - \hat{\beta}_1 \sim N(\beta_2 - \beta_1, \sigma^2 C (X^T X)^{-1} C^T)\]</span></p>
 </section>
 <section id="example.-diamonds-data" class="slide level2">
 <h2>Example. Diamonds data</h2>
-<p><small> What drives diamond prices? Exploration suggests that low-quality diamonds are more expensive</small></p><small>
-<p>Worst diamond color is J (yellow-ish), worst clarity is l1</p>
-</small><p><small></small></p>
+<p>What drives diamond prices? Exploration suggests that low-quality diamonds are more expensive (worst diamond color is J (yellow-ish), worst clarity is l1)</p>
 <div class="panel-tabset">
 <ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Price vs.&nbsp;cut</a></li><li><a href="#tabset-1-2">Price vs.&nbsp;color</a></li><li><a href="#tabset-1-3">Price vs.&nbsp;clarity</a></li></ul>
 <div class="tab-content">
@@ -515,7 +515,7 @@ W= C Z \sim N(C \mu, C V C^T)
 </section>
 <section id="diagnosing-the-issue" class="slide level2">
 <h2>Diagnosing the issue</h2>
-<p>Price is strongly associated with carats</p>
+<p>Price is strongly associated with carats (diamond weight)</p>
 <div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-6_2b8b49aef6b5d2ae292ccb3f1555ea26">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(carat, price)) <span class="sc">+</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hex</span>(<span class="at">bins =</span> <span class="dv">50</span>) <span class="sc">+</span></span>
@@ -566,7 +566,7 @@ W= C Z \sim N(C \mu, C V C^T)
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="05_basicmodels_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch"><p>Note: log2 facilitates interpretation a bit</p>
+<img data-src="05_basicmodels_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch"><p>log2 facilitates interpretation (+1 in log2 scale <span class="math inline">\(\Rightarrow \times 2\)</span> in original scale)</p>
 </section>
 <section class="slide level2">
 
@@ -753,45 +753,51 @@ clarity^7    0.0443251857  0.052424836</code></pre>
 </section>
 <section class="slide level2">
 
-<p>Easier to define a function that summarizes any fitted model</p>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-22_e0a9041b493caa1bee682cca56c67381">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>coefSummary<span class="ot">=</span> <span class="cf">function</span>(lmfit, <span class="at">level=</span><span class="fl">0.95</span>, <span class="at">digits=</span><span class="dv">3</span>) {</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">class</span>(lmfit) <span class="sc">!=</span> <span class="st">'lm'</span>) <span class="fu">stop</span>(<span class="st">'lmfit must be of class lm'</span>)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  b<span class="ot">=</span> <span class="fu">round</span>(<span class="fu">coef</span>(lmfit), digits)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  ci<span class="ot">=</span> <span class="fu">round</span>(<span class="fu">confint</span>(lmfit, <span class="at">level=</span>level), digits)</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  ci<span class="ot">=</span> <span class="fu">paste</span>(<span class="st">'('</span>,ci[,<span class="dv">1</span>],<span class="st">','</span>,ci[,<span class="dv">2</span>],<span class="st">')'</span>,<span class="at">sep=</span><span class="st">''</span>)</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  pval<span class="ot">=</span> <span class="fu">round</span>(<span class="fu">summary</span>(lmfit)<span class="sc">$</span>coef[,<span class="st">'Pr(&gt;|t|)'</span>],<span class="dv">5</span>)</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  pval[pval <span class="sc">&lt;</span> <span class="fl">0.00001</span>]<span class="ot">=</span> <span class="st">'&lt;0.00001'</span></span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  ans<span class="ot">=</span> <span class="fu">tibble</span>(<span class="fu">names</span>(b), b, ci, pval)</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(ans)<span class="ot">=</span> <span class="fu">c</span>(<span class="st">'Parameter'</span>,<span class="st">'Estimate'</span>,<span class="st">'Conf. Int.'</span>,<span class="st">'P-value'</span>)</span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(ans)</span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Easier to define a function that summarizes any fitted model. I created function <code>coefSummary</code> (at <code>routines.R</code>) for that purpose</p>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-22_f1e1f4dacd345601f81247c1ce2ef37b">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>coefSummary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>function (lmfit, level = 0.95, digits = 3) 
+{
+    require(tidyverse)
+    if (!("lm" %in% class(lmfit))) 
+        stop("lmfit must be of class lm")
+    b = round(coef(lmfit), digits)
+    ci = round(confint(lmfit, level = level), digits)
+    ci = paste("(", ci[, 1], ",", ci[, 2], ")", sep = "")
+    pval = round(summary(lmfit)$coef[, 4], 5)
+    pval[pval &lt; 1e-05] = "&lt;0.00001"
+    ans = tibble(names(b), b, ci, pval)
+    names(ans) = c("Parameter", "Estimate", "Conf. Int.", "P-value")
+    return(ans)
+}</code></pre>
+</div>
 </div>
 <div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-23_3d131ea56a655123aace210508bf1a36">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coefSummary</span>(lmfit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coefSummary</span>(lmfit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 19 × 4
    Parameter   Estimate `Conf. Int.`    `P-value`
-   &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;
- 1 (Intercept)   12.2   (12.198,12.204) 0        
- 2 lcarat         1.88  (1.882,1.886)   0        
- 3 cut.L          0.174 (0.167,0.181)   0        
- 4 cut.Q         -0.051 (-0.057,-0.045) 2.83e- 64
- 5 cut.C          0.019 (0.014,0.025)   6.77e- 14
- 6 cut^4         -0.002 (-0.006,0.002)  2.78e-  1
- 7 color.L       -0.634 (-0.64,-0.628)  0        
- 8 color.Q       -0.138 (-0.143,-0.133) 0        
- 9 color.C       -0.021 (-0.026,-0.016) 2.28e- 17
-10 color^4        0.017 (0.013,0.022)   1.35e- 13
-11 color^5       -0.003 (-0.007,0.001)  1.46e-  1
-12 color^6        0.003 (0,0.007)       8.20e-  2
-13 clarity.L      1.32  (1.313,1.333)   0        
-14 clarity.Q     -0.351 (-0.36,-0.341)  0        
-15 clarity.C      0.191 (0.183,0.199)   0        
-16 clarity^4     -0.095 (-0.102,-0.089) 6.11e-183
-17 clarity^5      0.04  (0.034,0.045)   6.77e- 49
-18 clarity^6     -0.003 (-0.007,0.002)  2.63e-  1
-19 clarity^7      0.048 (0.044,0.052)   1.29e-120</code></pre>
+   &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;    
+ 1 (Intercept)   12.2   (12.198,12.204) &lt;0.00001 
+ 2 lcarat         1.88  (1.882,1.886)   &lt;0.00001 
+ 3 cut.L          0.174 (0.167,0.181)   &lt;0.00001 
+ 4 cut.Q         -0.051 (-0.057,-0.045) &lt;0.00001 
+ 5 cut.C          0.019 (0.014,0.025)   &lt;0.00001 
+ 6 cut^4         -0.002 (-0.006,0.002)  0.27847  
+ 7 color.L       -0.634 (-0.64,-0.628)  &lt;0.00001 
+ 8 color.Q       -0.138 (-0.143,-0.133) &lt;0.00001 
+ 9 color.C       -0.021 (-0.026,-0.016) &lt;0.00001 
+10 color^4        0.017 (0.013,0.022)   &lt;0.00001 
+11 color^5       -0.003 (-0.007,0.001)  0.14562  
+12 color^6        0.003 (0,0.007)       0.08204  
+13 clarity.L      1.32  (1.313,1.333)   &lt;0.00001 
+14 clarity.Q     -0.351 (-0.36,-0.341)  &lt;0.00001 
+15 clarity.C      0.191 (0.183,0.199)   &lt;0.00001 
+16 clarity^4     -0.095 (-0.102,-0.089) &lt;0.00001 
+17 clarity^5      0.04  (0.034,0.045)   &lt;0.00001 
+18 clarity^6     -0.003 (-0.007,0.002)  0.26259  
+19 clarity^7      0.048 (0.044,0.052)   &lt;0.00001 </code></pre>
 </div>
 </div>
 </section>
@@ -801,8 +807,8 @@ clarity^7    0.0443251857  0.052424836</code></pre>
 <ul>
 <li>Put <code>coefSummary</code> in file <code>routines.R</code>. Source it when starting R</li>
 </ul>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-24_53b40106dee8304f90863bbb372845d0">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">'routines.R'</span>) <span class="co">#recall to set path to directory</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-24_4ea2ea7204bb4250e572451d931e6e4b">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">'../code/routines.R'</span>) <span class="co">#change path to directory where routines.R is stored</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Create your own R package (to be seen), document and share the code</li>
@@ -813,8 +819,8 @@ clarity^7    0.0443251857  0.052424836</code></pre>
 <section id="plotting-intervals" class="slide level2">
 <h2>Plotting intervals</h2>
 <p><code>coefplot</code> helps visualize 95% confidence intervals <span class="math inline">\(\hat{\beta}_j \pm 2 \sqrt{\hat{V}(\hat{\beta}_j)}\)</span></p>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-25_ca642a77639fd8339828b11408dd2681">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coefplot</span>(lmfit2, <span class="at">predictors=</span><span class="st">"cut"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-25_cea9230c1c18933633072fde300073ec">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coefplot</span>(lmfit2, <span class="at">predictors=</span><span class="st">"cut"</span>) <span class="co">#show only parameters with name including "cut"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="05_basicmodels_files/figure-revealjs/unnamed-chunk-25-1.png" width="960" class="r-stretch"></section></section>
@@ -833,18 +839,18 @@ clarity^7    0.0443251857  0.052424836</code></pre>
 </ul>
 <p>Residuals vs predicted values</p>
 <div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-26_f25e6e317ce63e90cbb506eef4ca2dd5">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds2, <span class="fu">aes</span>(<span class="at">x=</span>pred2, <span class="at">y=</span>res2)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds2, <span class="fu">aes</span>(<span class="at">x=</span>pred2, <span class="at">y=</span>res2)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="05_basicmodels_files/figure-revealjs/unnamed-chunk-26-1.png" width="960" class="r-stretch"></section>
 <section id="assessing-linearity" class="slide level2">
 <h2>Assessing linearity</h2>
 <div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-27_2eb7b3f7c579c9c9a351167e62440864">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds2, <span class="fu">aes</span>(pred2, res2)) <span class="sc">+</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope=</span><span class="dv">0</span>, <span class="at">intercept=</span><span class="dv">0</span>, <span class="at">col=</span><span class="st">'gray'</span>) <span class="sc">+</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">'Model prediction'</span>, <span class="at">y=</span><span class="st">'Residuals'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds2, <span class="fu">aes</span>(pred2, res2)) <span class="sc">+</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope=</span><span class="dv">0</span>, <span class="at">intercept=</span><span class="dv">0</span>, <span class="at">col=</span><span class="st">'gray'</span>) <span class="sc">+</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">'Model prediction'</span>, <span class="at">y=</span><span class="st">'Residuals'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="05_basicmodels_files/figure-revealjs/unnamed-chunk-27-1.png" width="960" class="r-stretch"></section>
@@ -852,34 +858,35 @@ clarity^7    0.0443251857  0.052424836</code></pre>
 
 <p>Here non-linearity seems mostly due to (log) carats</p>
 <div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-28_ea65731d4d2071a80ba7cfa19d7fe8ef">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds2, <span class="fu">aes</span>(lcarat, lprice)) <span class="sc">+</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">col=</span><span class="st">'blue'</span>) <span class="sc">+</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">col=</span><span class="st">'red'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds2, <span class="fu">aes</span>(lcarat, lprice)) <span class="sc">+</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">col=</span><span class="st">'blue'</span>) <span class="sc">+</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">col=</span><span class="st">'red'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="05_basicmodels_files/figure-revealjs/unnamed-chunk-28-1.png" width="960" class="r-stretch"></section>
 <section id="assessing-constant-variance" class="slide level2">
 <h2>Assessing constant variance</h2>
 <div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-29_e6864ff4c9f02c953f013107aa913c4b">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds2, <span class="fu">aes</span>(<span class="at">x=</span>pred2, <span class="at">y=</span>res2)) <span class="sc">+</span> </span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">group =</span> <span class="fu">cut_width</span>(pred2, <span class="fl">0.2</span>))) <span class="sc">+</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">'Model prediction'</span>, <span class="at">y=</span><span class="st">'Residuals'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds2, <span class="fu">aes</span>(<span class="at">x=</span>pred2, <span class="at">y=</span>res2)) <span class="sc">+</span> </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">group =</span> <span class="fu">cut_width</span>(pred2, <span class="fl">0.2</span>))) <span class="sc">+</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">'Model prediction'</span>, <span class="at">y=</span><span class="st">'Residuals'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="05_basicmodels_files/figure-revealjs/unnamed-chunk-29-1.png" width="960" class="r-stretch"></section>
 <section id="residual-normality" class="slide level2">
 <h2>Residual normality</h2>
+<p>Note: qq-normal plots require that residuals have 0 mean, variance=1 (function <code>scale</code>)</p>
 <div class="panel-tabset">
-<ul id="tabset-5" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-5-1">Histogram (qqplot)</a></li><li><a href="#tabset-5-2">Histogram (base R)</a></li><li><a href="#tabset-5-3">qq-plot</a></li></ul>
+<ul id="tabset-5" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-5-1">Histogram (qqplot)</a></li><li><a href="#tabset-5-2">Histogram (base R)</a></li><li><a href="#tabset-5-3">qq-plot</a></li><li><a href="#tabset-5-4">qq-plot (base R)</a></li></ul>
 <div class="tab-content">
 <div id="tabset-5-1">
 <div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-30_d429787612dc38899242a5d477faf3e7">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds2, <span class="fu">aes</span>(<span class="at">x=</span>res)) <span class="sc">+</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y=</span> ..density..)) <span class="sc">+</span></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_overlay_normal_density</span>(<span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">'Residuals'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds2, <span class="fu">aes</span>(<span class="at">x=</span>res)) <span class="sc">+</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y=</span> ..density..)) <span class="sc">+</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_overlay_normal_density</span>(<span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">'Residuals'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img data-src="05_basicmodels_files/figure-revealjs/unnamed-chunk-30-1.png" width="960"></p>
 </div>
@@ -887,9 +894,9 @@ clarity^7    0.0443251857  0.052424836</code></pre>
 </div>
 <div id="tabset-5-2">
 <div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-31_9f9601c0c7bb18d27360419d18415dcf">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">scale</span>(diamonds2<span class="sc">$</span>res), <span class="at">xlab=</span><span class="st">'Residuals'</span>, <span class="at">prob=</span><span class="cn">TRUE</span>, <span class="at">main=</span><span class="st">''</span>)</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>xseq<span class="ot">=</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>,<span class="dv">4</span>,<span class="at">length=</span><span class="dv">200</span>)</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xseq, <span class="fu">dnorm</span>(xseq))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">scale</span>(diamonds2<span class="sc">$</span>res), <span class="at">xlab=</span><span class="st">'Residuals'</span>, <span class="at">prob=</span><span class="cn">TRUE</span>, <span class="at">main=</span><span class="st">''</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>xseq<span class="ot">=</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>,<span class="dv">4</span>,<span class="at">length=</span><span class="dv">200</span>)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xseq, <span class="fu">dnorm</span>(xseq))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img data-src="05_basicmodels_files/figure-revealjs/unnamed-chunk-31-1.png" width="960"></p>
 </div>
@@ -897,17 +904,71 @@ clarity^7    0.0443251857  0.052424836</code></pre>
 </div>
 <div id="tabset-5-3">
 <div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-32_b971d56fd0b48bc3b59adf7e9c184ce5">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds2, <span class="fu">aes</span>(<span class="at">sample=</span><span class="fu">scale</span>(res))) <span class="sc">+</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq</span>() <span class="sc">+</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope=</span><span class="dv">1</span>, <span class="at">intercept=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds2, <span class="fu">aes</span>(<span class="at">sample=</span><span class="fu">scale</span>(res))) <span class="sc">+</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq</span>() <span class="sc">+</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope=</span><span class="dv">1</span>, <span class="at">intercept=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img data-src="05_basicmodels_files/figure-revealjs/unnamed-chunk-32-1.png" width="960"></p>
+</div>
+</div>
+</div>
+<div id="tabset-5-4">
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-33_a365213d199af4edd1f836e0950f9714">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">scale</span>(diamonds2<span class="sc">$</span>res))</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img data-src="05_basicmodels_files/figure-revealjs/unnamed-chunk-33-1.png" width="960"></p>
 </div>
 </div>
 </div>
 </div>
 </div>
 </section></section>
+<section>
+<section id="exercise" class="title-slide slide level1 center">
+<h1>Exercise</h1>
+
+</section>
+<section class="slide level2">
+
+<p>FiveThirtyEight’s <a href="https://fivethirtyeight.com/features/higher-rates-of-hate-crimes-are-tied-to-income-inequality">post</a> on hate crimes around the 2016 USA elections</p>
+<p>Dataset <code>hate_crimes</code> (package <code>fivethirtyeight</code>) has this info for each state:</p>
+<ul>
+<li><p><code>avg_hatecrimes_per_100k_fbi</code>: pre-election number of hate crimes per 100,000 population by the FBI</p></li>
+<li><p>education (% adults <span class="math inline">\(\geq\)</span> 25 with high school degree)</p></li>
+<li><p>% of people who voted Donald Trump</p></li>
+<li><p>Income inequality (Gini index)</p></li>
+</ul>
+<p>Plus variables about racial diversity, economics etc (see <code>help(hate_crimes)</code>)</p>
+</section>
+<section class="slide level2">
+
+<p>Load the data, create a smaller version with the needed variables, and remove Hawaii (outcome not reported)</p>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-34_92e5baf1b879f75b4e2daac3716704b9">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fivethirtyeight)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"../code/routines.R"</span>)</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>sel<span class="ot">=</span> <span class="fu">c</span>(<span class="st">'state_abbrev'</span>,<span class="st">'avg_hatecrimes_per_100k_fbi'</span>,<span class="st">'share_vote_trump'</span>,<span class="st">'gini_index'</span>,<span class="st">'share_pop_hs'</span>)</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>hc<span class="ot">=</span> hate_crimes[,sel]</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(hc)<span class="ot">=</span> <span class="fu">c</span>(<span class="st">'state'</span>,<span class="st">'hatecrimes_fbi'</span>,<span class="st">'votes_trump'</span>,<span class="st">'gini'</span>,<span class="st">'hs'</span>)</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>hc<span class="ot">=</span> <span class="fu">filter</span>(hc, <span class="sc">!</span><span class="fu">is.na</span>(hatecrimes_fbi)) <span class="co">#outcome must be non-missing</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol type="1">
+<li><p>Fit a linear regression for <code>hatecrimes_fbi</code> vs.&nbsp;<code>votes_trump</code>, <code>gini</code>, <code>hs</code>. Report the point estimate, 95% intervals and P-values for the 3 covariates. Which of them are significantly associated to hate crimes?</p></li>
+<li><p>Assess the model assumptions: linearity, constant error variance, error normality. To what extent are they violated?</p></li>
+</ol>
+<p>Turn in an html with your solution <a href="https://drive.google.com/drive/folders/1jhh1CrXM3hqc7qTrOYeQzo2pV8Vly1NY?usp=sharing">here</a>. Name your file firstname_lastname.html</p>
+</section>
+<section class="slide level2">
+
+<p>Challenge: all variables are strongly correlated</p>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-35_4ef5fd1b5120787a3d155db2ac84918b">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>R<span class="ot">=</span> <span class="fu">select</span>(hc, <span class="sc">-</span>state) <span class="sc">|&gt;</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>(<span class="at">use=</span><span class="st">'pairwise.complete.obs'</span>)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot.mixed</span>(R)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="05_basicmodels_files/figure-revealjs/unnamed-chunk-35-1.png" width="960" class="r-stretch"></section></section>
 <section>
 <section id="interpreting-the-coefficients" class="title-slide slide level1 center">
 <h1>Interpreting the coefficients</h1>
@@ -917,28 +978,28 @@ clarity^7    0.0443251857  0.052424836</code></pre>
 <h2>Factors</h2>
 <p>To interpret the coefficients of categorical variables, we must understand how they’re coded</p>
 <p>To avoid problems, let’s store them as standard unordered factors</p>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-33_dfa940225b9d74736f707056ce8a699c">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(diamonds2<span class="sc">$</span>cut)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-36_cd49309dce1f461e43fd24508745a06d">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(diamonds2<span class="sc">$</span>cut)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] Ideal     Premium   Good      Very Good Fair     
 Levels: Fair &lt; Good &lt; Very Good &lt; Premium &lt; Ideal</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(diamonds2<span class="sc">$</span>color)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(diamonds2<span class="sc">$</span>color)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] E I J H F G D
 Levels: D &lt; E &lt; F &lt; G &lt; H &lt; I &lt; J</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(diamonds2<span class="sc">$</span>clarity)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(diamonds2<span class="sc">$</span>clarity)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] SI2  SI1  VS1  VS2  VVS2 VVS1 I1   IF  
 Levels: I1 &lt; SI2 &lt; SI1 &lt; VS2 &lt; VS1 &lt; VVS2 &lt; VVS1 &lt; IF</code></pre>
 </div>
 </div>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-34_a0f754ab9284b9ab4d30df509aa923d8">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>diamonds2<span class="sc">$</span>cut<span class="ot">=</span> <span class="fu">factor</span>(diamonds2<span class="sc">$</span>cut, <span class="at">ordered=</span><span class="cn">FALSE</span>)</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>diamonds2<span class="sc">$</span>color<span class="ot">=</span> <span class="fu">factor</span>(diamonds2<span class="sc">$</span>color, <span class="at">ordered=</span><span class="cn">FALSE</span>)</span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>diamonds2<span class="sc">$</span>clarity<span class="ot">=</span> <span class="fu">factor</span>(diamonds2<span class="sc">$</span>clarity, <span class="at">ordered=</span><span class="cn">FALSE</span>)</span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(diamonds2<span class="sc">$</span>cut)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-37_9f1e486e8d880b2a459d988722920ccd">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>diamonds2<span class="sc">$</span>cut<span class="ot">=</span> <span class="fu">factor</span>(diamonds2<span class="sc">$</span>cut, <span class="at">ordered=</span><span class="cn">FALSE</span>)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>diamonds2<span class="sc">$</span>color<span class="ot">=</span> <span class="fu">factor</span>(diamonds2<span class="sc">$</span>color, <span class="at">ordered=</span><span class="cn">FALSE</span>)</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>diamonds2<span class="sc">$</span>clarity<span class="ot">=</span> <span class="fu">factor</span>(diamonds2<span class="sc">$</span>clarity, <span class="at">ordered=</span><span class="cn">FALSE</span>)</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(diamonds2<span class="sc">$</span>cut)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] Ideal     Premium   Good      Very Good Fair     
 Levels: Fair Good Very Good Premium Ideal</code></pre>
@@ -948,9 +1009,9 @@ Levels: Fair Good Very Good Premium Ideal</code></pre>
 <section id="model.matrix" class="slide level2">
 <h2>model.matrix</h2>
 <p>Check how R codes internally the variables</p>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-35_8fb53e078fa5aac4e02d201d80f12644">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>x<span class="ot">=</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> lcarat <span class="sc">+</span> cut <span class="sc">+</span> color <span class="sc">+</span> clarity, <span class="at">data=</span>diamonds2)</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-38_b9445ba58db1c2f4e0403c5f81a56197">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>x<span class="ot">=</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> lcarat <span class="sc">+</span> cut <span class="sc">+</span> color <span class="sc">+</span> clarity, <span class="at">data=</span>diamonds2)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  (Intercept)    lcarat cutGood cutVery Good cutPremium cutIdeal colorE colorF
 1           1 -2.120294       0            0          0        1      1      0
@@ -972,8 +1033,8 @@ Levels: Fair Good Very Good Premium Ideal</code></pre>
 5           0           0         0</code></pre>
 </div>
 </div>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-36_969e86df3cab776203f3c8c030f12f4e">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(<span class="fu">levels</span>(diamonds2<span class="sc">$</span>cut))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-39_d142e370405ad55a71ba8f6a02f6fea9">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(<span class="fu">levels</span>(diamonds2<span class="sc">$</span>cut))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Fair"      "Good"      "Very Good" "Premium"   "Ideal"    </code></pre>
 </div>
@@ -986,9 +1047,9 @@ Levels: Fair Good Very Good Premium Ideal</code></pre>
 <p><span class="math display">\[
 \mbox{lprice}_i= \beta_0 + \beta_1 \mbox{good}_i + \beta_2 \mbox{very good}_i + \beta_3 \mbox{premium}_i + \beta_4 \mbox{ideal}_i + \ldots + \epsilon_i
 \]</span> When <code>cut</code> is fair and good we get (respectively)</p>
-<p><span class="math display">\[E(\log_2 \mbox{price}_i \mid \mbox{fair}_i)= \beta_0\]</span></p>
+<p><span class="math display">\[E(\log_2 \mbox{price}_i \mid \mbox{fair}_i=1, \ldots)= \beta_0 + \ldots \]</span></p>
 <p><span class="math display">\[
-E(\log_2 \mbox{price}_i \mid \mbox{good}_i=1)= \beta_0 + \beta_1  
+E(\log_2 \mbox{price}_i \mid \mbox{good}_i=1, \ldots)= \beta_0 + \beta_1 + \ldots
 \]</span></p>
 <p>Hence</p>
 <p><span class="math display">\[
@@ -997,11 +1058,12 @@ E(\log_2 \mbox{price}_i \mid \mbox{good}_i=1)= \beta_0 + \beta_1
 </section>
 <section id="section" class="slide level2">
 <h2></h2>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-37_4dc15e3294db36c20a6404d3c9c4f636">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>lmfit2<span class="ot">=</span> <span class="fu">lm</span>(lprice <span class="sc">~</span> lcarat <span class="sc">+</span> cut <span class="sc">+</span> color <span class="sc">+</span> clarity, <span class="at">data=</span>diamonds2)</span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>b<span class="ot">=</span> <span class="fu">cbind</span>(<span class="fu">summary</span>(lmfit2)<span class="sc">$</span>coef[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>)], <span class="fu">confint</span>(lmfit2))</span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>b[,<span class="sc">-</span><span class="dv">2</span>]<span class="ot">=</span> <span class="fu">round</span>(b[,<span class="sc">-</span><span class="dv">2</span>],<span class="dv">3</span>)</span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Estimates and CIs in the log2-scale</p>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-40_66644c6b9d37f2df2b722ac40a373886">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>lmfit2<span class="ot">=</span> <span class="fu">lm</span>(lprice <span class="sc">~</span> lcarat <span class="sc">+</span> cut <span class="sc">+</span> color <span class="sc">+</span> clarity, <span class="at">data=</span>diamonds2)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>b<span class="ot">=</span> <span class="fu">cbind</span>(<span class="fu">summary</span>(lmfit2)<span class="sc">$</span>coef[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>)], <span class="fu">confint</span>(lmfit2))</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>b[,<span class="sc">-</span><span class="dv">2</span>]<span class="ot">=</span> <span class="fu">round</span>(b[,<span class="sc">-</span><span class="dv">2</span>],<span class="dv">3</span>)</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Estimate      Pr(&gt;|t|)  2.5 % 97.5 %
 (Intercept)    11.335  0.000000e+00 11.319 11.351
@@ -1028,11 +1090,11 @@ clarityIF       1.607  0.000000e+00  1.590  1.624</code></pre>
 </section>
 <section class="slide level2">
 
-<p>Fair -&gt; Good increases price by 1.08, Fair -&gt; Very good by 1.12, etc.</p>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-38_b61000dc88393b318a116b57f59a1615">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>b[,<span class="sc">-</span><span class="dv">2</span>]<span class="ot">=</span> <span class="dv">2</span><span class="sc">^</span>b[,<span class="sc">-</span><span class="dv">2</span>]</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>b[,<span class="sc">-</span><span class="dv">2</span>]<span class="ot">=</span> <span class="fu">round</span>(b[,<span class="sc">-</span><span class="dv">2</span>],<span class="dv">3</span>)</span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>b[<span class="sc">-</span><span class="dv">1</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Let’s express them in the original scale. Fair -&gt; Good increases price by 1.08 (i.e.&nbsp;by 8%), Fair -&gt; Very good by 1.12 (i.e.&nbsp;by 12%), etc.</p>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-41_1d15885df12396d17b3368589ac3cba5">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>b[,<span class="sc">-</span><span class="dv">2</span>]<span class="ot">=</span> <span class="dv">2</span><span class="sc">^</span>b[,<span class="sc">-</span><span class="dv">2</span>]</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>b[,<span class="sc">-</span><span class="dv">2</span>]<span class="ot">=</span> <span class="fu">round</span>(b[,<span class="sc">-</span><span class="dv">2</span>],<span class="dv">3</span>)</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>b[<span class="sc">-</span><span class="dv">1</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Estimate      Pr(&gt;|t|) 2.5 % 97.5 %
 lcarat          3.691  0.000000e+00 3.686  3.696
@@ -1064,9 +1126,9 @@ clarityIF       3.046  0.000000e+00 3.010  3.082</code></pre>
 <li><p>Store prediction for each</p></li>
 <li><p>Unspecified predictors set to mean (continuous) or reference category (discrete)</p></li>
 </ul>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-39_5b6b00e37e3b85285c45cb1ac2fdcf40">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>mygrid<span class="ot">=</span> <span class="fu">data_grid</span>(diamonds2, cut, color, clarity, <span class="at">.model=</span>lmfit2)</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>mygrid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-42_24d29fda9ea50bf9c95700ebe320bcda">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>mygrid<span class="ot">=</span> <span class="fu">data_grid</span>(diamonds2, cut, color, clarity, <span class="at">.model=</span>lmfit2)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>mygrid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 280 × 4
    cut   color clarity lcarat
@@ -1087,9 +1149,9 @@ clarityIF       3.046  0.000000e+00 3.010  3.082</code></pre>
 </section>
 <section class="slide level2">
 
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-40_a66fbc7c2dd06736d8ef56851fe19496">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>lmpred2<span class="ot">=</span> <span class="fu">add_predictions</span>(mygrid, <span class="at">model=</span>lmfit2)</span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>lmpred2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-43_6cd8785dab95dafd75970b6f701b8b2f">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>lmpred2<span class="ot">=</span> <span class="fu">add_predictions</span>(mygrid, <span class="at">model=</span>lmfit2)</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>lmpred2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 280 × 5
    cut   color clarity lcarat  pred
@@ -1107,27 +1169,33 @@ clarityIF       3.046  0.000000e+00 3.010  3.082</code></pre>
 # … with 270 more rows</code></pre>
 </div>
 </div>
+<p><code>add_predictions</code> requires that <code>model</code> is of type <code>lm</code> / object that has a <code>predict</code> method</p>
 </section>
 <section class="slide level2">
 
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-41_03a0dbe0295dd23f703b70f5bdab9702">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(lmpred2, <span class="fu">aes</span>(<span class="at">x=</span>clarity, <span class="at">y=</span>pred, <span class="at">color=</span>color)) <span class="sc">+</span></span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> cut) <span class="sc">+</span></span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">'log2 (price)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-44_ff72d2ce58b7f939e5f70639c7cdc330">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(lmpred2, <span class="fu">aes</span>(<span class="at">x=</span>clarity, <span class="at">y=</span>pred, <span class="at">color=</span>color)) <span class="sc">+</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> cut) <span class="sc">+</span></span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">'log2 (price)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="05_basicmodels_files/figure-revealjs/unnamed-chunk-41-1.png" width="960" class="r-stretch"></section>
-<section id="linear-contrasts" class="slide level2">
+<img data-src="05_basicmodels_files/figure-revealjs/unnamed-chunk-44-1.png" width="960" class="r-stretch"></section></section>
+<section>
+<section id="linear-contrasts" class="title-slide slide level1 center">
+<h1>Linear contrasts</h1>
+
+</section>
+<section id="linear-contrasts-1" class="slide level2">
 <h2>Linear contrasts</h2>
-<p>Suppose we wish to obtain a CI for cut= “Ideal” - “Premium”</p>
+<p>We wish to obtain a conf. int. for cut= “Ideal” - “Premium”</p>
 <ul>
-<li><p><span class="math inline">\(\beta_5\)</span>: mean for “Premium” - “Fair” (reference)</p></li>
-<li><p><span class="math inline">\(\beta_6\)</span>: mean for “Ideal” - “Fair” (reference)</p></li>
-<li><p><span class="math inline">\(\beta_6 - \beta_5\)</span>: mean for “Ideal” - “Premium”</p></li>
+<li><p><span class="math inline">\(\beta_5\)</span>: mean for “Premium” - mean for “Fair” (reference)</p></li>
+<li><p><span class="math inline">\(\beta_6\)</span>: mean for “Ideal” - mean for “Fair” (reference)</p></li>
+<li><p><span class="math inline">\(\beta_6 - \beta_5\)</span>: mean for “Ideal” - mean for “Premium”</p></li>
 </ul>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-42_870385dd934fb7e70e1f2e53a9a64085">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coefSummary</span>(lmfit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-45_4122faa28d4ff30ca1a484a668f233e9">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coefSummary</span>(lmfit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 19 × 4
    Parameter    Estimate `Conf. Int.`    `P-value`
@@ -1156,12 +1224,19 @@ clarityIF       3.046  0.000000e+00 3.010  3.082</code></pre>
 </section>
 <section class="slide level2">
 
-<p>Linear contrasts can be done in <code>glht</code> (general linear hypotheses, R package <code>multcomp</code>)</p>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-43_ed59446ca156622e9332c9571f42d57a">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>C<span class="ot">=</span> <span class="fu">matrix</span>(<span class="dv">0</span>,<span class="at">nrow=</span><span class="dv">1</span>, <span class="at">ncol=</span><span class="fu">length</span>(<span class="fu">coef</span>(lmfit2)))</span>
-<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>C[<span class="dv">5</span>]<span class="ot">=</span> <span class="sc">-</span><span class="dv">1</span>; C[<span class="dv">6</span>]<span class="ot">=</span><span class="dv">1</span></span>
-<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>PvsI<span class="ot">=</span> <span class="fu">glht</span>(lmfit2, C)</span>
-<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(PvsI)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Goal.</strong> Test <span class="math inline">\(H_0: \beta_6 - \beta_5=0\)</span>. Get 95% confidence interval</p>
+<p>Linear contrasts done by <code>glht</code> (general linear hypotheses, R package <code>multcomp</code>)</p>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-46_a5e2dd3d134f11c04e31a51bb9044094">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>C<span class="ot">=</span> <span class="fu">matrix</span>(<span class="dv">0</span>,<span class="at">nrow=</span><span class="dv">1</span>, <span class="at">ncol=</span><span class="fu">length</span>(<span class="fu">coef</span>(lmfit2)))</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>C[<span class="dv">1</span>,<span class="dv">5</span>]<span class="ot">=</span> <span class="sc">-</span><span class="dv">1</span>; C[<span class="dv">1</span>,<span class="dv">6</span>]<span class="ot">=</span><span class="dv">1</span></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>C[<span class="dv">1</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>] <span class="co">#show first 10 columns</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  0  0  0  0 -1  1  0  0  0  0</code></pre>
+</div>
+</div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-47_1dce499c3ed0caa6f90cc37b0ef06af3">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>PvsI<span class="ot">=</span> <span class="fu">glht</span>(lmfit2, C)</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(PvsI)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
      Simultaneous Tests for General Linear Hypotheses
@@ -1175,7 +1250,7 @@ Linear Hypotheses:
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 (Adjusted p values reported -- single-step method)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(PvsI)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(PvsI)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
      Simultaneous Confidence Intervals
@@ -1194,35 +1269,36 @@ Linear Hypotheses:
 </section>
 <section id="doing-it-on-our-own" class="slide level2">
 <h2>Doing it on our own</h2>
-<p>Recall that <span class="math inline">\(\hat{\beta} \sim N(\beta, V)\)</span></p>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-44_f4b65e4b58fc69ee2dc5a81878537ef6">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>bhat<span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">coef</span>(lmfit2), <span class="at">ncol=</span><span class="dv">1</span>)</span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>V<span class="ot">=</span> <span class="fu">vcov</span>(lmfit2)</span>
-<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">diag</span>(V)) <span class="co">#SE's for beta's (compare to summary(lmfit2))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Recall that <span class="math inline">\(\hat{\beta} \sim N(\beta, V)\)</span>, where <span class="math inline">\(V= \sigma^2 (X^T X)^{-1}\)</span></p>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-48_d022114bc233567e0444f6b7b83fb6be">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>bhat<span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">coef</span>(lmfit2), <span class="at">ncol=</span><span class="dv">1</span>)</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>V<span class="ot">=</span> <span class="fu">vcov</span>(lmfit2)</span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sqrt</span>(<span class="fu">diag</span>(V)), <span class="dv">5</span>) <span class="co">#SE's for beta's (compare to summary(lmfit2))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> (Intercept)       lcarat      cutGood cutVery Good   cutPremium     cutIdeal 
- 0.008307556  0.001128819  0.005612801  0.005220634  0.005162957  0.005118670 
+     0.00831      0.00113      0.00561      0.00522      0.00516      0.00512 
       colorE       colorF       colorG       colorH       colorI       colorJ 
- 0.003056178  0.003090406  0.003024861  0.003209742  0.003595295  0.004434624 
+     0.00306      0.00309      0.00302      0.00321      0.00360      0.00443 
   claritySI2   claritySI1   clarityVS2   clarityVS1  clarityVVS2  clarityVVS1 
- 0.007469987  0.007428031  0.007469649  0.007583778  0.007816948  0.008043154 
+     0.00747      0.00743      0.00747      0.00758      0.00782      0.00804 
    clarityIF 
- 0.008699635 </code></pre>
+     0.00870 </code></pre>
 </div>
 </div>
 <p>Recall that <span class="math inline">\(C \hat{\beta} \sim N(C \beta, C V C^T)\)</span>. For us <span class="math inline">\(C \hat{\beta}= \hat{\beta}_6 - \hat{\beta}_5\)</span>, <span class="math inline">\(C\beta =\beta_6 - \beta_5\)</span>.</p>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-45_2ea9640c633f3c596dc96a0deebb5f7b">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>dhat<span class="ot">=</span> C <span class="sc">%*%</span> bhat</span>
-<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>se<span class="ot">=</span> <span class="fu">sqrt</span>(C <span class="sc">%*%</span> V <span class="sc">%*%</span> <span class="fu">t</span>(C))</span>
-<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>se</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-49_663f0b72d3140beac160d345c31c1bcc">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>dhat<span class="ot">=</span> C <span class="sc">%*%</span> bhat</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>se<span class="ot">=</span> <span class="fu">sqrt</span>(C <span class="sc">%*%</span> V <span class="sc">%*%</span> <span class="fu">t</span>(C))</span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(se, <span class="dv">5</span>) <span class="co">#matches previous slide</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>            [,1]
-[1,] 0.002149967</code></pre>
+<pre><code>        [,1]
+[1,] 0.00215</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>dhat.ci<span class="ot">=</span> <span class="fu">c</span>(dhat, dhat <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> se, dhat <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> se)</span>
-<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(dhat.ci, <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>dhat.ci<span class="ot">=</span> <span class="fu">c</span>(<span class="at">estimate=</span>dhat, <span class="at">ci.low=</span> dhat <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> se, <span class="at">ci.up=</span> dhat <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> se)</span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(dhat.ci, <span class="dv">5</span>) <span class="co">#matches previous slide</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.0316 0.0273 0.0358</code></pre>
+<pre><code>estimate   ci.low    ci.up 
+ 0.03156  0.02734  0.03577 </code></pre>
 </div>
 </div>
 </section></section>
@@ -1235,22 +1311,22 @@ Linear Hypotheses:
 
 <p>The effect of a covariate may depend on others</p>
 <p><strong>Example.</strong> Does effect of carats depend on cut?</p>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-46_e3e66975e5848194d87008fddcc265d7">
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-50_a4a4712129254fac30b0e6819b315cbd">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds2, <span class="fu">aes</span>(lcarat, lprice, <span class="at">color=</span>cut)) <span class="sc">+</span></span>
-<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">se=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds2, <span class="fu">aes</span>(lcarat, lprice, <span class="at">color=</span>cut)) <span class="sc">+</span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">se=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
-<img data-src="05_basicmodels_files/figure-revealjs/unnamed-chunk-46-1.png" width="960" class="r-stretch"></section>
+<img data-src="05_basicmodels_files/figure-revealjs/unnamed-chunk-50-1.png" width="960" class="r-stretch"></section>
 <section class="slide level2">
 
 <p>Let’s fit a model with interactions. All coefficients are statistically significant</p>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-47_d5eda9d81fbb7d5238628b7d87497d2b">
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>lmfit3<span class="ot">=</span> <span class="fu">lm</span>(lprice <span class="sc">~</span> lcarat <span class="sc">+</span> cut <span class="sc">+</span> lcarat<span class="sc">:</span>cut, <span class="at">data=</span>diamonds2)</span>
-<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coefSummary</span>(lmfit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-51_5b3080ab321631616b0a573eb8cec27f">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>lmfit3<span class="ot">=</span> <span class="fu">lm</span>(lprice <span class="sc">~</span> lcarat <span class="sc">+</span> cut <span class="sc">+</span> lcarat<span class="sc">:</span>cut, <span class="at">data=</span>diamonds2)</span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coefSummary</span>(lmfit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 4
    Parameter           Estimate `Conf. Int.`   `P-value`
@@ -1293,9 +1369,9 @@ Linear Hypotheses:
 <li><p>Fit models with and without interactions</p></li>
 <li><p>Compare with likelihood-ratio test (=ANOVA for linear models)</p></li>
 </ol>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-48_7066b2c04ce737a18e28a034dbe53202">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>lmfit4<span class="ot">=</span> <span class="fu">lm</span>(lprice <span class="sc">~</span> lcarat <span class="sc">+</span> cut, <span class="at">data=</span>diamonds2)</span>
-<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lmfit4, lmfit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-52_cbdfb264b8954fedba50a0b324201120">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>lmfit4<span class="ot">=</span> <span class="fu">lm</span>(lprice <span class="sc">~</span> lcarat <span class="sc">+</span> cut, <span class="at">data=</span>diamonds2)</span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lmfit4, lmfit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -1312,35 +1388,35 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="the-full-exercise" class="slide level2">
 <h2>The full exercise</h2>
 <p>Consider all possible interactions. All P-values are highly statistically significant</p>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-49_4926fae62ce6f994ee3a04fc27e7f5e9">
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>lmfull<span class="ot">=</span> <span class="fu">lm</span>(lprice <span class="sc">~</span> lcarat <span class="sc">+</span> cut <span class="sc">+</span> color <span class="sc">+</span> clarity <span class="sc">+</span> lcarat<span class="sc">:</span>cut <span class="sc">+</span> lcarat<span class="sc">:</span>color <span class="sc">+</span> lcarat<span class="sc">:</span>clarity, <span class="at">data=</span>diamonds2)</span>
-<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>lmdrop1<span class="ot">=</span> <span class="fu">lm</span>(lprice <span class="sc">~</span> lcarat <span class="sc">+</span> cut <span class="sc">+</span> color <span class="sc">+</span> clarity <span class="sc">+</span> lcarat<span class="sc">:</span>color <span class="sc">+</span> lcarat<span class="sc">:</span>clarity, <span class="at">data=</span>diamonds2)</span>
-<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>pvalue1<span class="ot">=</span> <span class="fu">anova</span>(lmdrop1, lmfull)[[<span class="st">'Pr(&gt;F)'</span>]][<span class="dv">2</span>]</span>
-<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a>lmdrop2<span class="ot">=</span> <span class="fu">lm</span>(lprice <span class="sc">~</span> lcarat <span class="sc">+</span> cut <span class="sc">+</span> color <span class="sc">+</span> clarity <span class="sc">+</span> lcarat<span class="sc">:</span>cut <span class="sc">+</span> lcarat<span class="sc">:</span>clarity, <span class="at">data=</span>diamonds2)</span>
-<span id="cb79-6"><a href="#cb79-6" aria-hidden="true" tabindex="-1"></a>pvalue2<span class="ot">=</span> <span class="fu">anova</span>(lmdrop2, lmfull)[[<span class="st">'Pr(&gt;F)'</span>]][<span class="dv">2</span>]</span>
-<span id="cb79-7"><a href="#cb79-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb79-8"><a href="#cb79-8" aria-hidden="true" tabindex="-1"></a>lmdrop3<span class="ot">=</span> <span class="fu">lm</span>(lprice <span class="sc">~</span> lcarat <span class="sc">+</span> cut <span class="sc">+</span> color <span class="sc">+</span> clarity <span class="sc">+</span> lcarat<span class="sc">:</span>cut <span class="sc">+</span> lcarat<span class="sc">:</span>color, <span class="at">data=</span>diamonds2)</span>
-<span id="cb79-9"><a href="#cb79-9" aria-hidden="true" tabindex="-1"></a>pvalue3<span class="ot">=</span> <span class="fu">anova</span>(lmdrop3, lmfull)[[<span class="st">'Pr(&gt;F)'</span>]][<span class="dv">2</span>]</span>
-<span id="cb79-10"><a href="#cb79-10" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(pvalue1, pvalue2, pvalue3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-53_cd31f4baef762bb44ce8167968a3102b">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>lmfull<span class="ot">=</span> <span class="fu">lm</span>(lprice <span class="sc">~</span> lcarat <span class="sc">+</span> cut <span class="sc">+</span> color <span class="sc">+</span> clarity <span class="sc">+</span> lcarat<span class="sc">:</span>cut <span class="sc">+</span> lcarat<span class="sc">:</span>color <span class="sc">+</span> lcarat<span class="sc">:</span>clarity, <span class="at">data=</span>diamonds2)</span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>lmdrop1<span class="ot">=</span> <span class="fu">lm</span>(lprice <span class="sc">~</span> lcarat <span class="sc">+</span> cut <span class="sc">+</span> color <span class="sc">+</span> clarity <span class="sc">+</span> lcarat<span class="sc">:</span>color <span class="sc">+</span> lcarat<span class="sc">:</span>clarity, <span class="at">data=</span>diamonds2)</span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>pvalue1<span class="ot">=</span> <span class="fu">anova</span>(lmdrop1, lmfull)[[<span class="st">'Pr(&gt;F)'</span>]][<span class="dv">2</span>]</span>
+<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a>lmdrop2<span class="ot">=</span> <span class="fu">lm</span>(lprice <span class="sc">~</span> lcarat <span class="sc">+</span> cut <span class="sc">+</span> color <span class="sc">+</span> clarity <span class="sc">+</span> lcarat<span class="sc">:</span>cut <span class="sc">+</span> lcarat<span class="sc">:</span>clarity, <span class="at">data=</span>diamonds2)</span>
+<span id="cb85-6"><a href="#cb85-6" aria-hidden="true" tabindex="-1"></a>pvalue2<span class="ot">=</span> <span class="fu">anova</span>(lmdrop2, lmfull)[[<span class="st">'Pr(&gt;F)'</span>]][<span class="dv">2</span>]</span>
+<span id="cb85-7"><a href="#cb85-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-8"><a href="#cb85-8" aria-hidden="true" tabindex="-1"></a>lmdrop3<span class="ot">=</span> <span class="fu">lm</span>(lprice <span class="sc">~</span> lcarat <span class="sc">+</span> cut <span class="sc">+</span> color <span class="sc">+</span> clarity <span class="sc">+</span> lcarat<span class="sc">:</span>cut <span class="sc">+</span> lcarat<span class="sc">:</span>color, <span class="at">data=</span>diamonds2)</span>
+<span id="cb85-9"><a href="#cb85-9" aria-hidden="true" tabindex="-1"></a>pvalue3<span class="ot">=</span> <span class="fu">anova</span>(lmdrop3, lmfull)[[<span class="st">'Pr(&gt;F)'</span>]][<span class="dv">2</span>]</span>
+<span id="cb85-10"><a href="#cb85-10" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(pvalue1, pvalue2, pvalue3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5.092037e-272  9.480426e-27 1.017366e-132</code></pre>
 </div>
 </div>
 <p>However, predictions are nearly identical</p>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-50_8bdb91108d3a99db01cd5d77ee55a14e">
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmfit2)<span class="sc">$</span>r.squared</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-54_a245d8a5be56966a3cae2a64e62c8e08">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmfit2)<span class="sc">$</span>r.squared <span class="co">#additive model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.9826161</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmfull)<span class="sc">$</span>r.squared</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmfull)<span class="sc">$</span>r.squared <span class="co">#additive + all pairwise interactions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.9832858</code></pre>
 </div>
 </div>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-51_ca9af95795c19fe25d10dff5177e6062">
-<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>diamonds2<span class="sc">$</span>predfull<span class="ot">=</span> <span class="fu">predict</span>(lmfull)</span>
-<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(diamonds2<span class="sc">$</span>pred2, diamonds2<span class="sc">$</span>predfull)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-55_b8fe90e68400e7a01d0ea84170f00f46">
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>diamonds2<span class="sc">$</span>predfull<span class="ot">=</span> <span class="fu">predict</span>(lmfull)</span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(diamonds2<span class="sc">$</span>pred2, diamonds2<span class="sc">$</span>predfull)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.9996594</code></pre>
 </div>
@@ -1348,12 +1424,16 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </section>
 <section class="slide level2">
 
-<p>This happens because, after adding all covariates, estimated interaction coef. became smaller.</p>
+<ul>
+<li><p>Earlier we plotted price vs.&nbsp;carat &amp; cut. <code>carat:cut</code> impacted predictions</p></li>
+<li><p>Regressing price vs.&nbsp;carat, cut, color &amp; clarity. &lt;interactions don’t change predictions much</p></li>
+</ul>
+<p>Why? After adding all covariates, estimated interaction coef. became smaller</p>
 <div class="panel-tabset">
 <ul id="tabset-6" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-6-1">Carat &amp; Cut</a></li><li><a href="#tabset-6-2">All covariates</a></li></ul>
 <div class="tab-content">
 <div id="tabset-6-1">
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-52_8baca7e00000427dada501c3b29265a4">
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-56_cb4aa6dec8917a693a5a710d1c6703c3">
 <div class="cell-output-display">
 <table>
 <thead>
@@ -1395,7 +1475,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 <div id="tabset-6-2">
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-53_36be08d2df48b70d6e251da0e961db0b">
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-57_f5c3ce89d4156247c12d6016ed0c27e7">
 <div class="cell-output-display">
 <table>
 <thead>
@@ -1520,11 +1600,37 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section class="slide level2">
 
 <p><code>multiplot</code> visually compares coefficients across models. Interactions lcarat:cut are smaller under the full model</p>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-54_bad40ab129df944eda630a7429f7402c">
-<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multiplot</span>(lmfull, lmfit3, <span class="at">intercept=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-58_150b8f5a88f932c98d224495a88058ad">
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multiplot</span>(lmfull, lmfit3, <span class="at">intercept=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="05_basicmodels_files/figure-revealjs/unnamed-chunk-54-1.png" width="960" class="r-stretch"></section></section>
+<img data-src="05_basicmodels_files/figure-revealjs/unnamed-chunk-58-1.png" width="960" class="r-stretch"></section>
+<section id="specifying-interactions-in-r" class="slide level2">
+<h2>Specifying interactions in R</h2>
+<p>We simulate some data for illustration</p>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-59_23a43e18977abfa50145a40d7731f9c7">
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>x1<span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">100</span>); x2<span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">100</span>); x3<span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>y<span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, x1 <span class="sc">+</span> x2<span class="sc">/</span><span class="dv">2</span>, <span class="at">sd=</span><span class="dv">1</span>)  <span class="co">#y = x1 + x2/2 + e, e ~ N(0,1)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Three ways to specify the same regression equation</p>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-60_966fc3633561fb922d8dd614e8e3b3e1">
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>fit1<span class="ot">=</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3 <span class="sc">+</span> x1<span class="sc">:</span>x2 <span class="sc">+</span> x1<span class="sc">:</span>x3 <span class="sc">+</span> x2<span class="sc">:</span>x3)</span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a>fit2<span class="ot">=</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1<span class="sc">*</span>x2 <span class="sc">+</span> x1<span class="sc">*</span>x3 <span class="sc">+</span> x2<span class="sc">*</span>x3) <span class="co">#with * you can drop the additive terms</span></span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a>fit3<span class="ot">=</span> <span class="fu">lm</span>(y <span class="sc">~</span> (x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3)<span class="sc">^</span><span class="dv">2</span>) <span class="co">#^2 adds main effects + interactions in one go</span></span>
+<span id="cb95-4"><a href="#cb95-4" aria-hidden="true" tabindex="-1"></a>fit3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ (x1 + x2 + x3)^2)
+
+Coefficients:
+(Intercept)           x1           x2           x3        x1:x2        x1:x3  
+   -0.10993      0.85210      0.47776     -0.02196     -0.01718      0.01148  
+      x2:x3  
+   -0.10373  </code></pre>
+</div>
+</div>
+</section></section>
 <section>
 <section id="nested-models" class="title-slide slide level1 center">
 <h1>Nested models</h1>
@@ -1533,14 +1639,10 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section class="slide level2">
 
 <p>A particular type of interaction is when data are nested within units (e.g.&nbsp;countries), and we wanna fit a model for each unit</p>
-<p><strong>gapminder data:</strong> country life expectancy over time popularized by Dr.&nbsp;Hans Rosling</p>
-<iframe src="https://www.youtube.com/embed/jbkSRLYSojo" width="750" height="400" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
-</section>
-<section class="slide level2">
-
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-55_311a59a002f7acbae5fd797d8f5ab943">
-<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span>
-<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>gapminder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Example</strong> gapminder data (country life expectancy over time)</p>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-61_e3183e1103065d3f6bfd8788a33316b8">
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a>gapminder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,704 × 6
    country     continent  year lifeExp      pop gdpPercap
@@ -1561,24 +1663,24 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </section>
 <section class="slide level2">
 
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-56_32efa9812104853c9022639964f77faf">
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(year, lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
-<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-62_e7fa5eeeee0507017bb70c85de6133c7">
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(year, lifeExp, <span class="at">group =</span> country)) <span class="sc">+</span></span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="05_basicmodels_files/figure-revealjs/unnamed-chunk-56-1.png" width="960" class="r-stretch"></section>
+<img data-src="05_basicmodels_files/figure-revealjs/unnamed-chunk-62-1.png" width="960" class="r-stretch"></section>
 <section class="slide level2">
 
-<p>To fit a model separately for each country we can:</p>
+<p>Two ways to fit a model separately for each country:</p>
 <ul>
 <li><p><code>lm</code> plus interaction with country. Check which is the reference country, recover intercept/slopes for the rest</p></li>
 <li><p>Use <code>group_by</code> and <code>map_df</code></p></li>
 </ul>
 <p>Note: better alternatives to fit nested models (random effects/hierarchical models)</p>
-<p>First, group by country and define nested dataset: each row is a country, and column <code>$data</code> is a list of tibbles</p>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-57_0e861bec7270d2e7e9c75643b0926763">
-<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>gm_country<span class="ot">=</span> <span class="fu">group_by</span>(gapminder, country, continent) <span class="sc">%&gt;%</span> <span class="fu">nest</span>() </span>
-<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>gm_country</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>First, group by country and <code>nest</code> dataset: each row is a country, and column <code>$data</code> is a list of tibbles</p>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-63_9885e15e8adf3e57255e300e99dbd59b">
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>gm_country<span class="ot">=</span> <span class="fu">group_by</span>(gapminder, country, continent) <span class="sc">|&gt;</span> <span class="fu">nest</span>() </span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>gm_country</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 142 × 3
 # Groups:   country, continent [142]
@@ -1601,19 +1703,20 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section class="slide level2">
 
 <p>Second, define a function to be applied to each dataset</p>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-58_169766e9593be8f7b6e78fc3e7b0c283">
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>fitmodel<span class="ot">=</span> <span class="cf">function</span>(df) {</span>
-<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>  fit<span class="ot">=</span> <span class="fu">lm</span>(lifeExp <span class="sc">~</span> year, <span class="at">data=</span>df)</span>
-<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>  ans<span class="ot">=</span> <span class="fu">c</span>(<span class="fu">coef</span>(fit), <span class="fu">summary</span>(fit)<span class="sc">$</span>r.squared)</span>
-<span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(ans)<span class="ot">=</span> <span class="fu">c</span>(<span class="st">'b0'</span>,<span class="st">'b1'</span>,<span class="st">'R2'</span>)</span>
-<span id="cb93-5"><a href="#cb93-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(ans)</span>
-<span id="cb93-6"><a href="#cb93-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-64_b216fb0b5a71a02f7079f2e8e3382dcd">
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>fitmodel<span class="ot">=</span> <span class="cf">function</span>(df) {</span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Return OLS and R2 for lifeExp ~ year</span></span>
+<span id="cb102-3"><a href="#cb102-3" aria-hidden="true" tabindex="-1"></a>  fit<span class="ot">=</span> <span class="fu">lm</span>(lifeExp <span class="sc">~</span> year, <span class="at">data=</span>df)</span>
+<span id="cb102-4"><a href="#cb102-4" aria-hidden="true" tabindex="-1"></a>  ans<span class="ot">=</span> <span class="fu">c</span>(<span class="fu">coef</span>(fit), <span class="fu">summary</span>(fit)<span class="sc">$</span>r.squared)</span>
+<span id="cb102-5"><a href="#cb102-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(ans)<span class="ot">=</span> <span class="fu">c</span>(<span class="st">'b0'</span>,<span class="st">'b1'</span>,<span class="st">'R2'</span>)</span>
+<span id="cb102-6"><a href="#cb102-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(ans)</span>
+<span id="cb102-7"><a href="#cb102-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Finally, use <code>dplyr</code>’s <code>map_df</code> to apply the function to each entry of the list</p>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-59_8446f6bd8ccdcff2a8885771f66b02dc">
-<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>coef_gm <span class="ot">=</span> <span class="fu">map_df</span>(gm_country<span class="sc">$</span>data, fitmodel)</span>
-<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>coef_gm <span class="ot">=</span> <span class="fu">cbind</span>(gm_country, coef_gm)</span>
-<span id="cb94-3"><a href="#cb94-3" aria-hidden="true" tabindex="-1"></a>coef_gm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Finally, use <code>map_df</code> to apply <code>fitmodel</code> to each entry of the list <code>gm_country$data</code></p>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-65_232ecd44a8a485acf54288ee42c2f4f3">
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>coef_gm <span class="ot">=</span> <span class="fu">map_df</span>(gm_country<span class="sc">$</span>data, fitmodel)</span>
+<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>coef_gm <span class="ot">=</span> <span class="fu">cbind</span>(gm_country, coef_gm)</span>
+<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a>coef_gm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 142 × 6
 # Groups:   country, continent [142]
@@ -1640,16 +1743,17 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <ul id="tabset-7" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-7-1"><span class="math inline">\(R^2\)</span> histogram</a></li><li><a href="#tabset-7-2">Countries</a></li></ul>
 <div class="tab-content">
 <div id="tabset-7-1">
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-60_17186f1b5821d1a31e42af78a36b5a57">
-<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(coef_gm, <span class="fu">aes</span>(<span class="at">x=</span>R2)) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-66_8925be090dfc1cf6b719454c518391bf">
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(coef_gm, <span class="fu">aes</span>(<span class="at">x=</span>R2)) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img data-src="05_basicmodels_files/figure-revealjs/unnamed-chunk-60-1.png" width="960"></p>
+<p><img data-src="05_basicmodels_files/figure-revealjs/unnamed-chunk-66-1.png" width="960"></p>
 </div>
 </div>
 </div>
 <div id="tabset-7-2">
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-61_745f54cc1a801a49e28ac6ab8de73eee">
-<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(coef_gm, R2 <span class="sc">&lt;</span> <span class="fl">0.5</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(country, continent, R2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-67_7bc55df2d3706dff2183fc097f79fec4">
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="co">#dplyr:filter and dplyr::select ensures using functions (filter,select) from package dplyr</span></span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">filter</span>(coef_gm, R2 <span class="sc">&lt;</span> <span class="fl">0.5</span>) <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">select</span>(country, continent, R2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 13 × 3
 # Groups:   country, continent [13]
@@ -1678,10 +1782,10 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section class="slide level2">
 
 <p>Unnest the dataset and add predictions</p>
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-62_0a4b95f35e058b914d299b76e3a60ff0">
-<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>coef_gmu<span class="ot">=</span> <span class="fu">unnest</span>(coef_gm, <span class="at">cols=</span><span class="fu">names</span>(coef_gm)) </span>
-<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>coef_gmu<span class="sc">$</span>pred<span class="ot">=</span> coef_gmu<span class="sc">$</span>b0 <span class="sc">+</span> coef_gmu<span class="sc">$</span>b1 <span class="sc">*</span> coef_gmu<span class="sc">$</span>year</span>
-<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>coef_gmu</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-68_02bffd1b67cf74a1a73beada0432bf34">
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>coef_gmu<span class="ot">=</span> <span class="fu">unnest</span>(coef_gm, <span class="at">cols=</span><span class="fu">names</span>(coef_gm))  <span class="co">#unnest &amp; keep all columns</span></span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a>coef_gmu<span class="sc">$</span>pred<span class="ot">=</span> coef_gmu<span class="sc">$</span>b0 <span class="sc">+</span> coef_gmu<span class="sc">$</span>b1 <span class="sc">*</span> coef_gmu<span class="sc">$</span>year</span>
+<span id="cb108-3"><a href="#cb108-3" aria-hidden="true" tabindex="-1"></a>coef_gmu</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,704 × 10
 # Groups:   country, continent [142]
@@ -1703,15 +1807,168 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </section>
 <section class="slide level2">
 
-<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-63_884bbafee96d9b0e819822f654d67d30">
-<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>poorfit<span class="ot">=</span> <span class="fu">filter</span>(coef_gmu, R2 <span class="sc">&lt;</span> <span class="fl">0.25</span>)</span>
-<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(poorfit) <span class="sc">+</span></span>
-<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(year, lifeExp)) <span class="sc">+</span></span>
-<span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(year, pred), <span class="at">col=</span><span class="st">'red'</span>) <span class="sc">+</span></span>
-<span id="cb101-5"><a href="#cb101-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-69_22194ad2251ed718c765e7ffd7af8c6c">
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>poorfit<span class="ot">=</span> <span class="fu">filter</span>(coef_gmu, R2 <span class="sc">&lt;</span> <span class="fl">0.25</span>) <span class="co">#countries with low R2</span></span>
+<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(poorfit) <span class="sc">+</span></span>
+<span id="cb110-3"><a href="#cb110-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(year, lifeExp)) <span class="sc">+</span></span>
+<span id="cb110-4"><a href="#cb110-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(year, pred), <span class="at">col=</span><span class="st">'red'</span>) <span class="sc">+</span></span>
+<span id="cb110-5"><a href="#cb110-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="05_basicmodels_files/figure-revealjs/unnamed-chunk-63-1.png" width="960" class="r-stretch"><p>Can you explain any of these patterns?</p>
+<img data-src="05_basicmodels_files/figure-revealjs/unnamed-chunk-69-1.png" width="960" class="r-stretch"><p>Can you explain any of these patterns?</p>
+</section></section>
+<section>
+<section id="summary-of-useful-functions" class="title-slide slide level1 center">
+<h1>Summary of useful functions</h1>
+
+</section>
+<section id="useful-functions" class="slide level2">
+<h2>Useful functions</h2>
+<ul>
+<li><p>Fitting the model: <code>lm</code>, <code>predict</code>, <code>residuals</code></p></li>
+<li><p>Extract inference from fitted model: <code>summary</code>, <code>confint</code></p></li>
+<li><p>Plot coefficients: <code>coefplot</code>, <code>multiplot</code></p></li>
+<li><p>Plot predictions: <code>data_grid</code>, <code>add_predictions</code></p></li>
+<li><p>Diagnostics: <code>geom_smooth</code>, <code>geom_boxplot</code>, <code>geom_qq</code></p></li>
+</ul>
+</section></section>
+<section>
+<section id="exercise-1" class="title-slide slide level1 center">
+<h1>Exercise</h1>
+<p>Select 3 countries, create factor <code>country</code> with 3 levels. Create <code>years_since_1952</code></p>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-70_9c0b15079aef5349c977d8b5cd317a53">
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span>
+<span id="cb111-3"><a href="#cb111-3" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"../code/routines.R"</span>)</span>
+<span id="cb111-4"><a href="#cb111-4" aria-hidden="true" tabindex="-1"></a>gm3<span class="ot">=</span> gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb111-5"><a href="#cb111-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'France'</span>,<span class="st">'Italy'</span>,<span class="st">'Spain'</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb111-6"><a href="#cb111-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(<span class="at">country=</span> <span class="fu">factor</span>(country), <span class="at">years_since_1952=</span> year <span class="sc">-</span> <span class="dv">1952</span>)</span>
+<span id="cb111-7"><a href="#cb111-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-8"><a href="#cb111-8" aria-hidden="true" tabindex="-1"></a>fit1<span class="ot">=</span> <span class="fu">lm</span>(lifeExp <span class="sc">~</span> years_since_1952 <span class="sc">+</span> country, <span class="at">data=</span>gm3)</span>
+<span id="cb111-9"><a href="#cb111-9" aria-hidden="true" tabindex="-1"></a><span class="fu">coefSummary</span>(fit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 4
+  Parameter        Estimate `Conf. Int.`    `P-value`
+  &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;    
+1 (Intercept)        67.1   (66.551,67.679) &lt;0.00001 
+2 years_since_1952    0.263 (0.249,0.277)   &lt;0.00001 
+3 countryItaly       -0.335 (-0.922,0.252)  0.25348  
+4 countrySpain       -0.145 (-0.732,0.441)  0.61706  </code></pre>
+</div>
+</div>
+<ul>
+<li><p>For France: <span class="math inline">\(E(y_i)= \beta_0 + \beta_1 (\mbox{year}_i - 1952)\)</span></p></li>
+<li><p>For Italy: <span class="math inline">\(E(y_i)= \beta_0 + \beta_2 + \beta_1 (\mbox{year}_i - 1952)\)</span></p></li>
+</ul>
+<p>How do we interpret <span class="math inline">\(\beta_0\)</span>? And <span class="math inline">\(\beta_0 + \beta_2\)</span>?</p>
+</section>
+<section class="slide level2">
+
+<p><code>country</code> has 3 levels. <code>contrasts</code> shows how they’re coded</p>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-71_8e61f62792aef2e9c21a58f106524605">
+<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(gm3<span class="sc">$</span>country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "France" "Italy"  "Spain" </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(gm3<span class="sc">$</span>country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Italy Spain
+France     0     0
+Italy      1     0
+Spain      0     1</code></pre>
+</div>
+</div>
+<p>Recall that <span class="math inline">\(x_{i1}\)</span> is the year. Internally R defines</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><span class="math display">\[
+x_{i2}= \begin{cases} 1 \mbox{, if country}_i=\mbox{Italy} \\ 0 \mbox{, else} \end{cases}
+\]</span></p>
+</div><div class="column" style="width:50%;">
+<p><span class="math display">\[
+x_{i3}= \begin{cases} 1 \mbox{, if country}_i=\mbox{Spain} \\ 0 \mbox{, else} \end{cases}
+\]</span></p>
+</div>
+</div>
+<p>Alternative to 0/1 coding: <strong>sum-to-zero constraint</strong>. In our example</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><span class="math display">\[
+x_{i2}= \begin{cases} 1 \mbox{, if country}_i=\mbox{France} \\ -1 \mbox{, if country}_i=\mbox{Spain} \\ 0 \mbox{, else} \end{cases}
+\]</span></p>
+</div><div class="column" style="width:50%;">
+<p><span class="math display">\[
+x_{i3}= \begin{cases} 1 \mbox{, if country}_i=\mbox{Italy} \\ -1 \mbox{, if country}_i=\mbox{Spain}  \\ 0 \mbox{, else} \end{cases}
+\]</span></p>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<p>sum-to-zero coding can be done with <code>contrasts</code> and <code>contr.sum</code></p>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-72_babe6ecb5ac611f510d4a50fdf4b7d89">
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contr.sum</span>(<span class="fu">levels</span>(gm3<span class="sc">$</span>country)) <span class="co">#check what the sum-to-zero codes look like</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       [,1] [,2]
+France    1    0
+Italy     0    1
+Spain    -1   -1</code></pre>
+</div>
+</div>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-73_4c0bcfd4dd1ab979808c61821f1ada1f">
+<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a>gm3<span class="sc">$</span>country0<span class="ot">=</span> gm3<span class="sc">$</span>country <span class="co">#create new variable</span></span>
+<span id="cb119-2"><a href="#cb119-2" aria-hidden="true" tabindex="-1"></a>c0<span class="ot">=</span> <span class="fu">contr.sum</span>(<span class="fu">levels</span>(gm3<span class="sc">$</span>country0)) <span class="co">#tell contr.sum the factor levels</span></span>
+<span id="cb119-3"><a href="#cb119-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(c0)<span class="ot">=</span> <span class="fu">c</span>(<span class="st">'France'</span>,<span class="st">'Italy'</span>)   <span class="co">#set column names to facilitate interpreting coef.</span></span>
+<span id="cb119-4"><a href="#cb119-4" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(gm3<span class="sc">$</span>country0) <span class="ot">=</span> c0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s fit the model with the new coding</p>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-74_ddf0ea02d10bdb9bdde8dd53d2199b89">
+<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a>fit2<span class="ot">=</span> <span class="fu">lm</span>(lifeExp <span class="sc">~</span> years_since_1952 <span class="sc">+</span> country0, <span class="at">data=</span>gm3)</span>
+<span id="cb120-2"><a href="#cb120-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coefSummary</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 4
+  Parameter        Estimate `Conf. Int.`    `P-value`
+  &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;    
+1 (Intercept)        67.0   (66.504,67.406) &lt;0.00001 
+2 years_since_1952    0.263 (0.249,0.277)   &lt;0.00001 
+3 country0France      0.16  (-0.179,0.499)  0.34281  
+4 country0Italy      -0.175 (-0.514,0.164)  0.30103  </code></pre>
+</div>
+</div>
+<p>Results for <span class="math inline">\(\beta_1\)</span> (years) as before. Different for <span class="math inline">\((\hat{\beta}_0, \hat{\beta}_2, \hat{\beta}_3)\)</span></p>
+</section>
+<section id="interpretation" class="slide level2">
+<h2>Interpretation</h2>
+<p><span class="math display">\[
+E(y_i)= \beta_0 + \beta_1 (x_{i1} - 1952) + \beta_2 x_{i2} + \beta_3 x_{i3}
+\]</span></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><span class="math display">\[
+x_{i2}= \begin{cases} 1 \mbox{, if country}_i=\mbox{France} \\ -1 \mbox{, if country}_i=\mbox{Spain} \\ 0 \mbox{, else} \end{cases}
+\]</span></p>
+</div><div class="column" style="width:50%;">
+<p><span class="math display">\[
+x_{i3}= \begin{cases} 1 \mbox{, if country}_i=\mbox{Italy} \\ -1 \mbox{, if country}_i=\mbox{Spain}  \\ 0 \mbox{, else} \end{cases}
+\]</span></p>
+</div>
+</div>
+<ul>
+<li><p>For France: <span class="math inline">\(E(y_i)= \beta_0 + \beta_2 + \beta_1 (x_{i1} - 1952)\)</span></p></li>
+<li><p>For Italy: <span class="math inline">\(E(y_i)= \beta_0 + \beta_3 + \beta_1 (x_{i1} - 1952)\)</span></p></li>
+<li><p>For Spain: <span class="math inline">\(E(y_i)= \beta_0 - \beta_2 - \beta_3 + \beta_1 (x_{i1} - 1952)\)</span></p></li>
+<li><p>Average across countries: <span class="math inline">\(E(y_i)= \beta_0 + \beta_1 (x_{i1} - 1952)\)</span></p></li>
+</ul>
+<p><span class="math inline">\(\beta_0\)</span> is the mean life exp. at 1952 across countries</p>
+<p><span class="math inline">\(\beta_2\)</span> is France’s deviation from that mean. <span class="math inline">\(\beta_3\)</span> is Italy’s. <span class="math inline">\(-\beta_2 - \beta_3\)</span> is Spain’s</p>
+</section>
+<section id="exercise-2" class="slide level2">
+<h2>Exercise</h2>
+<p>Fit a model with interactions with the 0/1 coding and with the sum-to-zero coding. Interpret the estimated parameter values from each model</p>
+<div class="cell" data-hash="05_basicmodels_cache/revealjs/unnamed-chunk-75_3e4b4809edd053ac77e67b2350882bcd">
+<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a>fit3<span class="ot">=</span> <span class="fu">lm</span>(lifeExp <span class="sc">~</span> years_since_1952 <span class="sc">+</span> country <span class="sc">+</span> years_since_1952<span class="sc">:</span>country, <span class="at">data=</span>gm3)</span>
+<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a>fit4<span class="ot">=</span> <span class="fu">lm</span>(lifeExp <span class="sc">~</span> years_since_1952 <span class="sc">+</span> country0 <span class="sc">+</span> years_since_1952<span class="sc">:</span>country0, <span class="at">data=</span>gm3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="footer footer-default">
 
 </div>

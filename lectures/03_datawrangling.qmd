@@ -28,8 +28,9 @@ Load the required R packages.
 ```{r, warning=FALSE}
 library(tidyverse)
 library(gapminder)
-library(nycflights13)
 library(Lahman)
+library(nycflights13)
+library(skimr)
 ```
 
 
@@ -67,7 +68,7 @@ The 5 main functions
 
 - Compute numerical summaries: `summarise()`. If used with `group_by()`, it operates by groups
 
-Other functions: `rename`, `mutate`, `transmute`
+Other functions: `rename`, `transmute`
 
 
 ## Filter {auto-animate="true"}
@@ -263,7 +264,17 @@ select(flights, carrier, dep_delay, arr_delay, fine)
 
 # Summarizing data
 
-## Basics
+## Overall summaries
+
+Package `skimr` provides a nice function `skim()` to compute basic stats for all variables in a dataset. `skim_with()` has further customization options
+
+```{r}
+s= skim(flights)
+s
+```
+
+
+## Summarizing by groups
 
 Base R has `aggregate` to compute a single summary (e.g. the mean)
 
@@ -275,7 +286,7 @@ Base R has `aggregate` to compute a single summary (e.g. the mean)
 aggregate(dep_delay ~ year + month + day, data=flights, FUN=mean, na.rm=TRUE)
 ```
 
-## Basics
+## Summarizing by groups
 
 dplyr has two key functions: `summarise` and `group_by`
 
@@ -343,7 +354,7 @@ flights |>
   summarise(n_early = sum(dep_time < 500, na.rm=TRUE))
 ```
 
-## Grouping by multiple variables
+## Ungrouping
 
 ```{r}
 daily= group_by(flights, year, month, day)
@@ -515,7 +526,7 @@ Name your file firstname_lastname.html
 
 1. For each year, compute the inter-quartile range or the GDP/capita across countries
 
-2. Do a scatter-plot of IQR vs. year. Add lines to the plot
+2. Do a scatterplot of IQR vs. year. Add lines to the plot
 
 
 # Data import and export
@@ -616,7 +627,7 @@ tab2
 pivot_longer(tab2, cols=c('2022','2023'), names_to="year", values_to= "population")
 ```
 
-## Separating and uniting columns
+## Separating columns
 
 Sometimes a character needs to be separated into several ones
 
@@ -636,6 +647,23 @@ Or positions at which to split
 ```{r}
 separate(tab, col=date2, sep=c(2,4), into=c('day','month','year'))
 ```
+
+## Uniting columns
+
+Consider the dataset `stab`
+
+```{r}
+stab= separate(tab, col=date2, sep=c(2,4), into=c('day','month','year')) |>
+  select(-date)
+stab
+```
+
+We use `unite` to paste columns together. The 2nd argument is the new column name, then we specify the columns to be pasted. `sep` is an optional separation character
+
+```{r}
+unite(stab, date, day, month, year, sep="-")
+```
+
 
 
 # Relational data

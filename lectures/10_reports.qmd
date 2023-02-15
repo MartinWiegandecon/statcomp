@@ -1,0 +1,578 @@
+---
+title: "Modern Statistical Computing"
+subtitle: "9. Reports"
+author: "David Rossell"
+institute: "Pompeu Fabra University"
+execute:
+  echo: true
+format:
+  revealjs:
+    theme: [default, custom.scss]
+    scrollable: true
+toc: true
+toc-depth: 1
+number-sections: false
+mouse-wheel: true
+code-overflow: scroll
+code-line-numbers: false
+code-copy: true
+cache: true
+title-slide-style: pandoc
+bibliography: references.bib
+---
+
+## Reproducing these lecture notes
+
+Load required R packages
+
+```{r, warning=FALSE}
+library(tidyverse)
+library(dygraphs)
+library(DT)
+library(fivethirtyeight)
+library(gapminder)
+library(gt)
+library(maps)
+library(plotly)
+library(threejs)
+library(tidyquant)
+library(shiny)
+```
+
+## Reporting results
+
+R provides useful formats
+
+
+- Dashboard: short website displaying your main figures/tables/data 
+
+- htmlwidgets: interactive html documents
+
+- Shiny apps: applications allowing for more user input
+
+
+We cover a gentle intro. Further resources
+
+- [Quarto documentation](https://quarto.org) and [manual](https://quarto.org/docs/guide)
+
+- Hadley Wickam's chapter on [Quarto formats](https://r4ds.hadley.nz/quarto-formats.html)
+
+- [htmlwidgets website](https://www.htmlwidgets.org/index.html)
+
+
+# Dashboard
+
+File -> New file -> Quarto document. Select html format
+
+Your document should start like this
+
+```{r, eval=FALSE}
+---
+title: "Diamonds dashboard"
+format: html
+execute:
+  echo: false
+---
+```
+
+
+The `echo: false` option disables the printing of code (only output is displayed)
+
+To display individual code chunks use `#| echo: true`
+
+````{verbatim}
+
+```{r}
+#| echo: true
+2 * 2
+```
+
+````
+
+---
+
+You can create multiple tabs as follows
+
+- Write `:::panel-tabset` at start and `:::` at the end
+
+- Start a new tab with `## Title`. Then put R code
+
+
+````{verbatim}
+
+:::panel-tabset
+
+## Scatterplot
+
+```{r}
+ggplot(diamonds, aes(carat, price)) +
+  geom_point()
+```
+
+## Histogram
+
+```{r}
+ggplot(diamonds, aes(price)) +
+  geom_histogram()
+```
+
+:::
+
+````
+
+The next slide shows the result
+
+---
+
+:::panel-tabset
+
+## Scatterplot
+
+```{r}
+ggplot(diamonds, aes(carat, price)) +
+  geom_point()
+```
+
+## Histogram
+
+```{r}
+ggplot(diamonds, aes(price)) +
+  geom_histogram()
+```
+
+:::
+
+## Plot layout
+
+Code chunks have layouts attributes to arrange the output
+
+- `#|layout-nrow`: number of rows
+
+- `#|layout-nrow`: number of columns
+
+- `#| layout: [] `: rows / columns of different sizes
+
+It may also be useful to define captions
+
+- `#| fig-cap`: text for figure caption
+
+- `#| cap-location`: where to place to caption (top, bottom or margin)
+
+- `#| fig-subcap`: figure sub-captions
+
+## Example
+
+2 plots in a single row, with figure captions
+
+````{verbatim}
+
+```{r}
+#| layout-nrow: 1
+#| fig-cap: 
+#|   - "Histogram of prices"
+#|   - "Prices vs carats"
+ggplot(diamonds, aes(price)) +
+  geom_histogram()
+ggplot(diamonds, aes(carat, price)) +
+  geom_point()
+```
+
+````
+
+The result is shown in the next slide
+
+
+##
+
+```{r, echo=FALSE}
+#| layout-nrow: 1
+#| fig-cap: 
+#|   - "Histogram of prices"
+#|   - "Prices vs carats"
+ggplot(diamonds, aes(price)) +
+  geom_histogram()
+ggplot(diamonds, aes(carat, price)) +
+  geom_point()
+```
+
+
+---
+
+Custom layouts: specify for each row the size of each figure
+
+Example: 2 figures in 1st row of size 0.5 each, 1 figure  in 2nd row
+
+````{verbatim}
+
+```{r}
+#| layout: [[0.5,0.5], [1]]
+ggplot(diamonds, aes(carat)) +
+  geom_histogram()
+ggplot(diamonds, aes(price)) +
+  geom_histogram()
+ggplot(diamonds, aes(carat, price)) +
+  geom_point()
+```
+
+````
+
+---
+
+```{r, echo=FALSE}
+#| layout: [[0.5,0.5], [1]]
+ggplot(diamonds, aes(carat)) +
+  geom_histogram()
+ggplot(diamonds, aes(price)) +
+  geom_histogram()
+ggplot(diamonds, aes(carat, price)) +
+  geom_point()
+```
+
+
+## Displaying tables & data
+
+- `gt` in package `gt`: styling transformations to display a table (column names, alignment etc.)
+
+- `datatable` in package `DT`: display data as html. Provides filtering, pagination, search & sorting
+
+An example by Hadley Wickam: file `../examples/diamonds_dashboard.qmd`
+
+
+# htmlwidgets
+
+---
+
+Some packages to create interactive plots without using any Javascript (if you know Javascript, then more advanced options are possible)
+
+- Time series plots: [dygraphs](https://rstudio.github.io/dygraphs)
+
+- Make a ggplot interactive: [plotly](https://plotly.com/r)
+
+- 3D scatter-plots and globes: [threejs](https://github.com/bwlewis/rthreejs)
+
+- Data tables: [DT](https://rstudio.github.io/DT)
+
+## dygraphs
+
+`dygraph` visualizes times series interactively
+
+- 1st argument is the data. Either a time series (`xts` object) or a data.frame where the 1st column is the x-axis
+
+- Other arguments to set labels etc.
+
+
+**Example.** Female and male deaths from lunch cancer
+
+```{r}
+
+lungDeaths= cbind(mdeaths, fdeaths)
+lungDeaths[1:5,]
+
+```
+
+---
+
+Zoom into x-axis regions. Double-click to zoom out
+
+```{r}
+dygraph(lungDeaths)
+```
+
+## Some plot options
+
+```{r}
+dygraph(lungDeaths, main = "Deaths from Lung Disease (UK)") |>
+  dyOptions(drawPoints = TRUE, pointSize = 3) |>              #show points
+  dyHighlight(highlightSeriesOpts = list(strokeWidth = 3)) |> #thicker lines
+  dyRangeSelector()                                           #add zooming panel
+```
+
+
+## Plotly
+
+Plotly dynamically displays info about elements of a gg-plot. See [here](https://plotly.com/r) for a gallery of what's possible
+
+**Example.** Scatter-plot for gapminder data
+
+Save the ggplot into an object, then use `ggplotly`. Argument `tooltip`: what aesthetics from your ggplot (**not** from your original dataset) to show
+
+```{r}
+#| output-location: slide
+
+library(plotly)
+
+gm2007= filter(gapminder, year==2007)
+
+p= ggplot(gm2007, aes(gdpPercap, lifeExp, text=country)) +
+  geom_point(aes(colour=continent, size=pop), alpha = 0.7, show.legend = TRUE) +
+  scale_size(range = c(2, 12)) +
+  scale_x_log10() +
+  labs(x='GDP per capita', y='Life expectancy')
+
+ggplotly(p, tooltip=c("country","gdpPercap","lifeExp"))
+```
+
+---
+
+Alternatively, you can use `plot_ly` and `layout` to create plots directly, as illustrated below.
+
+
+```{r}
+fig= plot_ly(gm2007, x = ~continent, y = ~lifeExp, split = ~continent, type = 'violin', box = list(visible = T)) 
+
+layout(fig, xaxis = list(title = "Continent"), yaxis = list(title = "Life Expectancy (years)",zeroline = F))
+```
+
+
+## plotly for time series
+
+```{r}
+getSymbols("GOOG", from="2020-01-01", to="2021-12-31") #creates dataset GOOG
+```
+
+```{r}
+GOOG[1:5,]
+```
+
+Compute stock market value relative to start date
+
+```{r}
+
+stock= data.frame(GOOG$GOOG.Adjusted)
+stock$GOOG.Adjusted= stock$GOOG.Adjusted/stock$GOOG.Adjusted[1]
+stock= data.frame(stock,rownames(stock))
+colnames(stock)= c('GOOG','date')
+```
+
+```{r}
+#| output-location: slide
+
+fig= plot_ly(stock, type = 'scatter', mode = 'lines') |>
+  add_trace(x = ~date, y = ~GOOG, name = 'GOOG') |>
+  layout(showlegend = F)
+options(warn = -1)
+
+layout(fig, xaxis = list(zerolinecolor = '#ffff', zerolinewidth = 2, gridcolor = 'ffff'), yaxis = list(zerolinecolor = '#ffff', zerolinewidth = 2, gridcolor = 'ffff'), plot_bgcolor='#e5ecf6', width = 900)
+
+```
+
+## 3D scatterplots
+
+```{r}
+
+sel= c('state_abbrev','avg_hatecrimes_per_100k_fbi','share_vote_trump','gini_index')
+hc= hate_crimes[,sel]
+names(hc)= c('state','hatecrimes_fbi','votes_trump','gini')
+hc= filter(hc, !is.na(hatecrimes_fbi)) 
+
+labs= c("Votes for Trump","Gini","Hate crimes FBI")
+scatterplot3js(hc$votes_trump, hc$gini, hc$hatecrimes_fbi, axisLabels=labs)  |>
+points3d(hc$votes_trump, hc$gini, hc$hatecrimes_fbi, color="red", pch=hc$state)
+
+```
+
+## globejs
+
+You can plot data on the globe, e.g. arcs
+
+```{r}
+#| code-fold: true
+#| colum: screen-inset
+
+data(flights)
+f= flights
+f= mutate(flights, dest=paste(round(f[,3],2),":",round(f[,4],2),sep="")) # approx location as factor
+
+# select destinations with frequency >300
+freq= group_by(f, dest) |> 
+  summarise(nflights_dest=n())
+fsel= left_join(f, freq) |>
+  filter(nflights_dest > 300)
+
+globejs(arcs=fsel[,1:4])
+
+```
+
+## globejs
+
+Or bars, e.g. city populations below
+
+```{r}
+#| code-fold: true
+#| column: screen-inset
+
+data(world.cities, package="maps")
+cities <- world.cities[order(world.cities$pop, decreasing=TRUE)[1:1000],]
+value  <- 100 * cities$pop / max(cities$pop)
+col <- colorRampPalette(c("cyan", "lightgreen"))(10)[floor(10 * value/100) + 1]
+globejs(lat=cities$lat, long=cities$long, value=value, color=col, atmosphere=TRUE)
+
+```
+
+
+## Data tables
+
+`datatable` from package `DT` displays a dynamic table that can be searched, filtered, sorted... For a full description see [here](https://rstudio.github.io/DT)
+
+
+```{r}
+
+datatable(gapminder, rownames=FALSE, caption="Life expectancy", options = list(pageLength=5))
+
+```
+
+
+# Shiny apps
+
+
+##
+
+Widgets allow *user-based* interactivity: all operations occur in your browser
+
+Shiny apps also allow *server-based* interactions: operations are run by R in a server
+
+To start a Shiny app
+
+1. Create a directory for the app in your computer
+
+2. Add a file `app.R` specifying how the app should look
+
+For a primer on Shiny, see Hadley Wickam's [Mastering Shiny](https://mastering-shiny.org/index.html). See also 
+
+- [Shiny cheatsheet](https://posit.co/wp-content/uploads/2022/10/shiny-1.pdf)
+
+- [Shiny extensions](https://github.com/nanxstats/awesome-shiny-extensions)
+
+
+## app.R
+
+A minimal example
+
+```{r, eval=FALSE}
+library(shiny)
+
+ui= fluidPage(  #specify user interface
+
+    selectInput("color", label="Color", choices= c("Blue","Red","Green")), #dropdown menu
+    
+    checkboxInput("married", "Are you married?", value=FALSE), #check-box
+
+)
+
+server= function(input, output, session) {  #server calculations
+}
+
+shinyApp(ui, server) #run the App
+```
+
+Click the "Run App" button in RStudio (or outside RStudio, 
+call `shiny::runApp()` with the directory containing `app.R`)
+
+
+---
+
+In `server` you store all results in `output`, which is a list. The returned element must be the result of a render function:
+
+- `renderPlot`: return a plot (`plotOutput` in `ui`)
+
+- `renderPrint`: print results as in R console (paired with or `verbatimOutput` in `ui`)
+
+- `renderText`: return single string (paired with `textOuput` in `ui`)
+
+- `renderTable`: print a static table (`tableOutput` in `ui`). For short tables
+
+- `renderDataTable`: print a dynamic table (`dataTableOutput` in `ui`). For large tables/data
+
+```{r, eval=FALSE}
+ui= fluidPage(  #specify user interface
+
+    selectInput("color", label="Color", choices= c("Blue","Red","Green")), #dropdown menu
+    
+    verbatimTextOutput("tablehomeworld"), #print output$tablehomeworld
+
+)
+
+
+server= function(input, output, session) {  #server calculations
+
+  output$tablehomeworld= renderPrint({
+    data= filter(starwars, skin_color == input$color) #input$color from selectInput
+    table(data$homeworld)
+  })
+  
+}
+```
+
+## Some useful functions
+
+- Print text. `p("aaa")`, `strong("bold face text")`, `helpText("italics text")`
+
+- Headers. `titlePanel`, `h1("aaa")`, `h2("aaa")`, `h3("aaa")`
+
+- Line break. `br()`
+
+- Update results button. `submitButton("Get results")`
+
+- Panel arrangement: `sidebarLayout`, `mainPanel`, `sidebarPanel`
+
+
+## Capturing inputs
+
+
+```{r, eval=FALSE}
+animals= c("dog", "cat", "other") #define vector used multiple times below
+
+ui <- fluidPage(
+  selectInput("animal", "Favourite animal?", animals, multiple=FALSE), #single choice
+  radioButtons("animal", "Favourite animal?", animals), #single choice
+  checkboxGroupInput("animal", "Animals you like?", animals) , #multiple choice
+
+  textInput("name", "What's your name?"), #short text box
+  textAreaInput("story", "Tell me about yourself", rows = 3)         #larger text box
+  
+  numericInput("num", "Number one", value = 0, min = 0, max = 100),  #numeric box
+  sliderInput("num2", "Number two", value = 50, min = 0, max = 100), #slider
+  
+  dateInput("dob", "When were you born?"),                 #single date
+  dateRangeInput("holiday", "Departure and return date?")  #date range
+  
+  fileInput("upload", NULL) #input file
+)
+```
+
+- 1st argument: identifier of the variable where input is stored
+
+- 2nd argument: text to display
+
+- `value`: default value (optional)
+
+- Other arguments: specific on each input box
+
+
+## Deploying Shiny to a server
+
+Easiest option: Shinyapps.io. Free plan allows 5 apps, 25 active hours
+
+After creating an account and setting up the system, you can submit/update the app as follows
+
+```{r, eval=FALSE}
+library(rsconnect)
+rsconnect::deployApp("../examples/shinyapp") #specify local directory where you saved the app
+```
+
+Other options available, such as hosting your own server, see [here](https://shiny.rstudio.com/deploy))
+
+
+## Exercise
+
+Check out `../examples/shinyapp/app.R`. Using this as a template, create a Shiny app where
+
+- The user selects a country in the `gapminder` data (package `gapminder`) 
+
+- A scatterplot of life expectancy vs. year is produced using only the data from that country, adding a linear regression line
+
+- The estimated regression coefficients are reported as separate text output
+
+
+
+
