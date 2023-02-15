@@ -1,0 +1,118 @@
+---
+# title: "Modern Statistical Computing"
+# subtitle: "Seminar 1"
+# title-block-banner: true
+date: "February 2, 2023"
+format: 
+  pdf: 
+    documentclass: report
+    geometry: 
+    - top = 30mm
+    - left = 20mm
+    fontfamily: libertinus
+    colorlinks: true
+    linkcolor: blue
+bibliography: references_seminar.bib
+citations-hover: true
+--- 
+  
+\begin{center}\vspace{0.3cm}
+\textbf{\Large Modern Statistical Computing} \\
+\vspace{5pt} {\large Seminar \#2} \\
+\vspace{5pt} {\large February 2, 2023} \\
+\vspace{5pt} {\large Homework part due on February 9, 2023 (3pm)} 
+\end{center}
+
+\flushleft 
+
+\rule{\linewidth}{0.1mm}
+
+In this seminar, you will be studying the long-term effects of the Spanish Inquisition by replicating some of the results in @Drelichman_etal_2021_Inquisition. 
+The Spanish Inquisition existed from 1478 to 1843 and was responsible for combatting heresy (= deviation from Catholic doctrine), prosecuting tens of thousands of individuals.[^1]
+
+[^1]: A more detailed historical account can be found on page 2 in @Drelichman_etal_2021_Inquisition. 
+
+Before starting to work on the data, think about possible ways how a historic institution like the Spanish Inquisition can affect economic and social outcomes today. 
+
+  
+  
+\subsection{Exploring the Data}
+
+1. Load the data into R. The key variables of interest are: 
+  - `adj_impact`: Measure for the strength of the inquisition [^2]
+  
+  [^2]: More precisely, it is defined as the number of years when the Inquisition persecuted at least one community member as a share of all years observed. 
+  
+  - `gdppc`: GDP p.c. 
+  - `religious`: Number of survey respondents who attended religious services in the previous week 
+  - `c_secondplus`: Population share with a high school degree or higher 
+  - `trust2`: A (standardized) measure of trust from surveys 
+  
+    The dataset also includes further sociodemographic and geographic variables which we will solely use as control variables in our regressions later.  
+    Make a table including summary statistics on the key variables listed above (you can for instance use the functions `describe` or `stargazer` from the packages `HMisc` and `stargazer` package, respectively). 
+
+2. In which autonomous regions was the Spanish Inquisition the strongest? 
+To get a sense of the geographic distribution of the impact of the Spanish Inquisition, generate a map showing the geographic distribution of its strength (you can either plot `adj_impact` directly, or first generate a factor-variable that contains quintile of `adj_impact`). You can find the corresponding shapefile `municoordinates.csv` on AulaGlobal.  
+
+To help you generate this plot, you can find some example code below: 
+
+```{r, eval = FALSE}
+
+# Color palette used 
+require(RColorBrewer)
+blues <- brewer.pal(9, "Blues")
+blue_palette <- c(blues[2], blues[4], blues[6], blues[8], blues[9])
+
+ggplot() + 
+  geom_polygon(data = municoord_df, aes(fill = quintiles, 
+               x = x, y = y, group = munid), 
+               size = 0, color = "gray45", alpha = 1) + 
+  scale_fill_manual(values = blue_palette, name = "Inquisition Impact \n Quintile", 
+                    breaks = c(1, 2, 3, 4, 5)) +
+  theme_void() + 
+  coord_quickmap()
+```
+
+
+\subsection{Assessing the Long-Run Effects of the Spanish Inquisition}  
+
+We are mainly interested in the effects of the Spanish Inquisition on today's economic development. Even though we won't be able to pin down a causal link from the Spanish Inquisition to economic development, we can at least assess their correlation and rule out some alternative explanations. 
+
+1. Generate a variable that assigns each municipality to one of the following categories: 
+    - `adj_impact` missing or 0 
+    - bottom tercile of non-zero `adj_impact` values 
+    - middle tercile of non-zero `adj_impact` values
+    - top tercile of non-zero `adj_impact` values
+    
+    Show the distribution of GDP p.c. by group. Do municipalities with larger impact of the Spanish Inquisition have lower or higher GDP per capita than less impacted municipalities? 
+  
+2. Before assessing the relationship between GDP p.c. and the Spanish Inquisition, check if the dependent variable (GDP p.c.) follows (roughly) a normal distribution? How would you transform the variable to use it in the regression later? Throughout the rest of the assignment, only use the transformed GDP p.c. variable. 
+Next, regress your transformed GDP p.c. variable on `adj_impact`. How do you interpret the coefficient? Plot the residuals against `adj_impact`. Do you have to adjust the standard errors? 
+
+3. We would like to examine if the relationship between GDP p.c. and `adj_impact`, documented in 2., might be driven by other sociodemographic or geographic confounders. 
+To do so, add (step-by-step) the following variables to the linear model estimated in 2.
+    - Sociodemographic controls: Log population, average age, the upper class population share and the share married 
+    - Geographic controls: Latitude, longitude, distance to river, distance to river
+    - Sociodemographic + geographic controls 
+    - Autonomous region fixed effects + sociodemographic and geogrpahic (you can use the [fixest](https://lrberge.github.io/fixest/) package and its function `feols`)
+
+  Show, graphically or in a table, whether the `adj_impact` coefficient changes across the different specifications. 
+
+\subsection{Studying other Outcomes (Homework, due: 09-02-2023, 3pm)} 
+
+*Remark:* Please submit your homework, ideally as a PDF document, via email to <martin.wiegand@upf.edu>, 
+
+1. Write a loop that estimates the full linear model (with all controls and autonomous region FEs) for the following outcomes: religious, education and trust.
+Generate a coefficient plot showing the effect of `adj_impact` on each of the outcomes (incl. GDP p.c. from part 2). 
+
+2. Finally, we are interested whether the effect of the Spanish Inquisition on economic development varies by region. To assess this hypothesis, estimate the model including control variables and let the `adj_impact` effect vary by autonomous region. Is the effect of the Spanish Inquisition on today's economic development homogeneous across regions? 
+
+\pagebreak 
+
+\subsection{References}
+
+
+  
+  
+  
+  

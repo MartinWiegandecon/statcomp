@@ -1,0 +1,75 @@
+---
+# title: "Modern Statistical Computing"
+# subtitle: "Seminar 1"
+# title-block-banner: true
+date: "February 5, 2023"
+format: 
+  pdf: 
+    documentclass: report
+    geometry: 
+      - top = 30mm
+      - left = 20mm
+    fontfamily: libertinus
+    colorlinks: true
+bibliography: references_seminar.bib
+citations-hover: true  
+--- 
+
+
+```{=tex}
+\begin{center}\vspace{0.3cm}
+\textbf{\Large Modern Statistical Computing} \\
+\vspace{5pt} {\large Hints for Seminar \#2} \\
+\vspace{5pt} {\large February 5, 2023} \\
+\end{center}
+```
+\flushleft
+
+\rule{\linewidth}{0.1mm}  
+
+\subsection{Exploring the Data}
+
+Some of you struggled with correctly reading the data into R. 
+In many cases, the data types for variables were not correct, e.g. `adj_impact` was read in as a character even though it is numeric. From my experience, this happens more often when using `read.csv` and not `read_csv` (which is from the `readr` package). I would recommend using `read_csv`. That way, the data type is more likely to be correct and you have the dataset right away as a tibble, which makes it easier to inspect it. 
+
+As many of you have noticed, it is easier to use the `describe`function from `HMisc`instead of `stargazer`to generate the summary statistics. As a side remark, the latter (`stargazer`) can be quite helpful if you want to export tables from R into a .tex document, for instance. 
+
+\subsection{Assessing the Long-Run Effects of the Spanish Inquisition}  
+
+1. Again, there are multiple ways to tackle this. One would be to first generate a only takes the positive values of `adj_impact`(it will be NA for `adj_impact`-values of zero), then its corresponding tercile variable, and ultimately generate a factor variable that is equal to 0 if `adj_impact` equals 0 (or NA), and otherwise equals the newly generated tercile variable. 
+
+2. If you want to double check that you used the "correct" transformation of the dependent variable, you can check your solution with @Drelichman_etal_2021_Inquisition. 
+As written in the instructions, only use the transformed variable in the following exercises. 
+
+3. When I ask you to estimate different linear models *step-by-step*, I mean that you proceed as follows: 
+    1. Estimate the linear model with no control variables, i.e. estimate 
+    $$
+    \text{Transformed GDP p.c.}_m = \beta_0 + \beta_1 \text{Adjusted Impact}_m + \epsilon_m 
+    $$
+    2. Add sociodemographic control variables to the model above: 
+    $$
+    \text{Transformed GDP p.c.}_m = \beta_0 + \beta_1 \text{Adjusted Impact}_m + \text{Sociodemographic Controls}_m' \gamma +  \epsilon_m 
+    $$
+    3. Add geographic (instead of sociodemographic) controls to the baseline model from 1. 
+    4. Have both control variable groups in the model. 
+    5. Finally, add autonomous region fixed effects. I again suggest that you take a look at [fixest](https://lrberge.github.io/fixest/) package and its function `feols`. 
+  
+\subsection{Studying other Outcomes (Homework, due: 09-02-2023, 3pm)} 
+  
+1. Estimate the model from bullet point 5. above for other outcomes, i.e. change the left-hand-side of the regression equation (e.g. instead of using Transformed GDP p.c.$_m$, use e.g. Religious$_m$). 
+  
+2. Here, you are supposed to estimate the model from bullet point 4., *but* let the coefficient on `adj_impact` vary by autonomous region. To be precise, you are supposed to have an interaction variable (or multiple, depending on how you code it) between a factor variable of the autonomous region and the `adj_impact` variable, such that you end up with an estimate of the effect of `adj_impact`on GDP p.c. for every autonomous regions.  
+
+\pagebreak 
+
+
+
+
+
+
+
+
+
+
+
+
