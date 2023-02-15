@@ -6,8 +6,8 @@
 *.pdf
 
 # Specific individual files (e.g. municipality coordinates)
-municoordinates.*
-muniscoord.dta
+*municoordinates.*
+*muniscoord.dta
 
 
 
